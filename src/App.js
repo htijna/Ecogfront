@@ -35,82 +35,36 @@ import Usersentry from './Components/Adminside/Adminadd/Usersentry';
 import Sellerentry from './Components/Adminside/Adminadd/Sellerentry';
 
 function App() {
-  const [auth, setAuth] = useState(false);
-  const [sellerAuth, setSellerAuth] = useState(false);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const checkToken = async () => {
-      const token = localStorage.getItem("token");
-      if (token) {
-        try {
-          const userResponse = await axios.post(
-            "http://localhost:5000/auth/VerifyToken",
-            { token }
-          );
-          const sellerResponse = await axios.post(
-            "http://localhost:5000/sauth/verifyToken",
-            { token }
-          );
-
-          if (userResponse.data.success) {
-            setAuth(true);
-          } else {
-            setAuth(false);
-          }
-
-          if (sellerResponse.data.success) {
-            setSellerAuth(true);
-          } else {
-            setSellerAuth(false);
-          }
-        } catch (error) {
-          console.error("Token verification failed:", error);
-          setAuth(false);
-          setSellerAuth(false);
-        }
-      } else {
-        setAuth(false);
-        setSellerAuth(false);
-      }
-      setLoading(false);
-    };
-
-    checkToken();
-  }, []);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
-
+ 
   return (
     <div>
       <BrowserRouter>
         <Routes>
           {/* Userside */}
           <Route path='/signup' element={<Usersignup />} />
-          <Route path='/' element={<Login setAuth={setAuth} />} />
-          <Route path='/userside' element={auth ? <Flexslide /> : <Navigate to="/" />} />
-          <Route path='/footer' element={auth ? <Footer /> : <Navigate to="/" />} />
-          <Route path='/mid' element={auth ? <Midpart /> : <Navigate to="/" />} />
-          <Route path='/cart' element={auth ? <Cart /> : <Navigate to="/" />} />
-           <Route path='/oview' element={auth ? <Order /> : <Navigate to="/" />} />
-           <Route path='/about' element={auth ? <Aboutus /> : <Navigate to="/" />} />
-          <Route path='/filter' element={auth ? <CategoryFilter /> : <Navigate to="/" />} />
-          <Route path='/category/:category' element={auth ? <CategoryPage /> : <Navigate to="/" />} />
-          <Route path='/order' element={auth ? <Orderview /> : <Navigate to="/" />} />
+          <Route path='/' element={<Login />} />
+          <Route path='/userside' element={<Flexslide /> } />
+          <Route path='/footer' element={<Footer />} />
+          <Route path='/mid' element={<Midpart />} />
+          <Route path='/cart' element={ <Cart /> } />
+           <Route path='/oview' element={<Order /> } />
+           <Route path='/about' element={<Aboutus />  }/>
+         <Route path='/filter' element={<CategoryFilter />} />
+          <Route path='/category/:category' element={ <CategoryPage />} />
+          <Route path='/order' element={ <Orderview /> } />
+          
 
           
           {/* Sellerside */}
+          <Route path='/seller/:id' element={<Home />} />
           <Route path='/sellersignup' element={<Sellersignup />} />
-          <Route path='/sellerlogin' element={<Sellerlogin setSellerAuth={setSellerAuth} />} />
-          <Route path='/seller' element={sellerAuth ? <Home /> : <Navigate to="/sellerlogin" />} />
-          <Route path='/products' element={sellerAuth ? <Recentlyadd /> : <Navigate to="/sellerlogin" />} />
-          <Route path='/add' element={sellerAuth ? <Addproduct /> : <Navigate to="/sellerlogin" />} />
-          <Route path='/productlist' element={<Productlist />} />
-          <Route path='/pview' element={sellerAuth ? <Productview /> : <Navigate to="/sellerlogin" />} />
-          <Route path='/sellerorder' element={sellerAuth ? <Incomingorder /> : <Navigate to="/sellerlogin" />} />
-          <Route path='/profile/:id' element={sellerAuth ? <Profile method='get' /> : <Navigate to="/sellerlogin" />} />
+          <Route path='/sellerlogin' element={<Sellerlogin />} />
+          <Route path='/add' element={<Addproduct method='post' />} />
+          <Route path='/pview/:id' element={<Productview method='get'/>} />
+          <Route path='/productlist' element={<Productlist method='get'/>} />
+          <Route path='/products' element={<Recentlyadd />} />
+          <Route path='/profile/:id' element={<Profile method='get'/>} />
+          <Route path='/sellerorder' element={<Incomingorder />} />
 
           {/* Admin */}
           <Route path='/alogin' element={<Adminlogin />} />

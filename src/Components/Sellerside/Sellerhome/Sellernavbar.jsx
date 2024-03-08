@@ -31,10 +31,12 @@ import PreviewIcon from '@mui/icons-material/Preview';
 
 
 
-const Sellernavbar = () => {
+const Sellernavbar = ({ sellerId }) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const { id } = useParams();
+  const { id: profileId } = useParams(); // Use 'id' instead of 'Id'
 
+
+console.log('id', sellerId);
   const handleSearch = () => {
     console.log("Search query: ", searchQuery);
     // Implement your search functionality here
@@ -74,11 +76,14 @@ const Sellernavbar = () => {
               </button>
             </div>
           </div>
-          <Link to="/seller" style={{ textDecoration: "none" }}>
-            <p className='hhicon'><DashboardIcon  />Dashboard</p></Link>
+          {/* <Link to="/seller" style={{ textDecoration: "none" }}>
+            <p className='hhicon'><DashboardIcon  />Dashboard</p></Link> */}
 
-            <Link to={`/profile/${id}`} style={{ textDecoration: "none" }}>
-            <p className='hhicon'><AccountCircleOutlinedIcon  />Profile</p></Link>
+<Link to={`/profile/${sellerId}`} style={{ textDecoration: "none" }}>
+  <p className='hhicon'><AccountCircleOutlinedIcon  />Profile</p>
+</Link>
+
+
 
           <Link to="/products" style={{ textDecoration: "none" }}>
             <p className='hhicon'><AddBusinessIcon  />Add Product</p>

@@ -52,6 +52,7 @@ const CategoryPage = () => {
     axios.post(baseUrl + '/cart/cartnew', productDetails)
       .then(response => {
         console.log('Item added to cart:', response.data);
+        alert('Adding ...');
         navigate('/cart');
       })
       .catch(error => {

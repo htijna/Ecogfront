@@ -2,32 +2,37 @@ import axios from 'axios';
 import React, { useState } from 'react';
 import './adminlogin.scss'
 import { useNavigate } from 'react-router-dom';
+import baseurl from '../../../Api'
 
 const Adminlogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
-  const [errorMessage, setErrorMessage] = useState('');
+  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   const handleLogin = async () => {
-    try {
-      const response = await axios.post('http://localhost:5000/adminAuth/admin', {
-        username,
-        password,
-      });
+            try {
+       
 
-      console.log('Login successful', response.data);
-      // Handle successful login (e.g., store token in state or localStorage)
-      navigate('/userlog');
-    } catch (error) {
-      console.error('Login failed', error.response.data);
-      // Set the error message based on the error status
-      if (error.response.status === 401) {
-        setErrorMessage('Didnt recognize you.');
-      } else {
-        setErrorMessage(error.response.data.message);
-      }
-    }
+             const response = await axios.post(baseurl+'/adminAuth/admin', {
+          username,
+          password,
+        });
+                
+          
+                if (response.data.success) {
+                  alert('Login successful');
+                  console.log(response.data);
+                  navigate('/userlog');
+                } 
+                else {
+                  setError('Invalid Email and Password. Please try again.');
+                  console.log(response.data);
+        
+                }
+              } catch (err) {
+                setError('Error occurred during login. Please try again.');
+              }
   };
 
 
@@ -38,7 +43,7 @@ const Adminlogin = () => {
           <div className="adminuserform-wrapper">
             <div className="adminuserlogo-container">
               <img src={require('./admin.jpg')} alt="Logo" />
-            </div>
+            </div>  {error && <p className="adminerror-message">{error}</p>}
             <h2>who are you? Reveal yourself!</h2>
             <p> To access your Entity.</p>
             <div className="adminuserinput-container">
@@ -69,17 +74,10 @@ const Adminlogin = () => {
             </button>
           </div>
         </div>
-        {errorMessage && <p className="adminerror-message">{errorMessage}</p>}
+      
       </div>
     </div>
   );
 };
 
 export default Adminlogin;
-
-
-
-
-
-
-

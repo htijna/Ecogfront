@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import './sellersignup.scss'
 
 
@@ -16,7 +16,7 @@ const Sellersignup = () => {
     address: '',
     password: '',
   });
-  const navigate = useNavigate();
+
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 
@@ -32,7 +32,6 @@ const Sellersignup = () => {
       console.log('Signup successful', response.data);
       // Handle success, e.g., show success message, redirect to login page
       setSuccessMessage('Signup successful. You can now log in.');
-      navigate('/sellerlogin');
       setErrorMessage('');
       setFormData({
         name: '',
@@ -45,7 +44,7 @@ const Sellersignup = () => {
       console.error('Signup failed', error.response ? error.response.data : error.message);
       // Handle error, e.g., show error message
       setErrorMessage(error.response ? error.response.data.message : 'Signup failed. Please try again.');
-      setSuccessMessage('Signup suceesfull');
+      setSuccessMessage('');
     }
   };
   return (
@@ -65,7 +64,8 @@ const Sellersignup = () => {
               <img src={require('../image/ecog.png')} alt="Logo" />
             </a>
           </div> */}
-          <h2>Hey Seller 👋🏻</h2>
+         
+          <h2>Hey Seller 👋🏻   </h2>      
           <p>Enter your credentials to access your account.</p>
           <div className="sellersignuppinput-container">
           {successMessage && <p className="success-message">{successMessage}</p>}
@@ -109,8 +109,3 @@ const Sellersignup = () => {
   
   
 export default Sellersignup
-
-
-
-
-

@@ -3,32 +3,36 @@ import './login.scss'
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const Login= ({setAuth}) => {
+const Login= () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
- 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
+
   const handleLogin = async () => {
     try {
+      console.log(email + " " + password);
       const response = await axios.post('http://localhost:5000/auth/userlogin', {
         email,
         password,
       });
-  
+
       console.log('Login successful', response.data);
-      // Handle successful login (e.g., store token in state or localStorage)
+      
       localStorage.setItem("token", response.data.token);
-      setAuth(true);
-  
-      navigate('/userside')
+      
+      // Handle successful login (e.g., store token in state or localStorage)
+      navigate('/userside');
     } catch (error) {
-      console.error('Login failed', error.response ? error.response.data : error.message);
-      // Check if error.response is defined before accessing its properties
-      if (error.response && error.response.status === 401) {
+      console.error('Login failed', error.response.data);
+
+    
+
+      // Set the error message based on the error status
+      if (error.response.status === 401) {
         setErrorMessage('Invalid email or password');
       } else {
-        setErrorMessage(error.response ? error.response.data.message : 'Login failed. Please try again.');
+        setErrorMessage(error.response.data.message);
       }
     }
   };

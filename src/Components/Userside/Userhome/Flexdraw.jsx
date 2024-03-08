@@ -13,6 +13,7 @@ import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import axios from 'axios';
 import baseUrl from '../../../Api';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+
 const Flexdraw = () => {
   const [searchQuery, setSearchQuery] = useState('');
   const [isOpen, setIsOpen] = useState(false);
@@ -21,7 +22,6 @@ const Flexdraw = () => {
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(true);
   const [cartCount, setCartCount] = useState(0); // Initialize cart count
-  
 
   useEffect(() => {
     axios.get(baseUrl + '/category/categoryview')
@@ -34,11 +34,9 @@ const Flexdraw = () => {
 
   const handleSearch = () => {
     console.log("Search query: ", searchQuery);
-    // Implement your search functionality here
+    navigate(`/search/${searchQuery}`);
   };
 
-  
-  
   const handleCategoryChange = (category) => {
     setSelectedCategory(category);
     setIsOpen(false);
@@ -118,22 +116,3 @@ const Flexdraw = () => {
 }
 
 export default Flexdraw;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

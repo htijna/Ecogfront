@@ -8,18 +8,8 @@ import baseUrl from '../../../Api';
 
 import Sellernavbar from '../Sellerhome/Sellernavbar';
 
-const Addproduct = (props) => {
-  
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    console.log('token', token);
-    if (!token) {
-      // Redirect to the login page
-      window.location.href = '/sellerlogin';
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array means it only runs once when the component mounts
 
+const Addproduct = (props) => {
   const [category, setCategory] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false); // State for loading indicator
@@ -59,24 +49,17 @@ const Addproduct = (props) => {
     formData.append('Status', inputs.Status);
     formData.append('Description', inputs.Description);
     formData.append('Photo', selectedImage);
-  
-    const token = localStorage.getItem('token');
-    console.log('Token:', token);
+
     axios
-      .post(baseUrl + '/product/productnew', formData, {
-        headers: {
-          'Authorization': token,
-          'Content-Type': 'multipart/form-data'
-        }
-      })
+      .post(baseUrl + '/product/productnew', formData)
       .then((response) => {
         setLoading(false); // Set loading to false after response
-        alert('Record saved');
+        alert('record saved');
         navigate('/products');
       })
       .catch((err) => {
         setLoading(false); // Set loading to false if there's an error
-        console.log('Error', err);
+        console.log('error', err);
       });
   };
 
@@ -90,13 +73,13 @@ const Addproduct = (props) => {
       .get(baseUrl + '/category/categoryview')
       .then((response) => {
         setCategory(response.data);
+        
       })
       .catch((err) => console.log(err));
   }, []);
 
   return (
     <div className="new">
-      
       <div className="newContainer">
         <Sellernavbar />
         <div className="top">
@@ -122,43 +105,22 @@ const Addproduct = (props) => {
                 autoComplete="off"
               >
                 <div className="filephoto">
-                  <label htmlFor="file">Image: </label>
-                  <input type="file" className="icon" onChange={handleImage} />
-                  <br />
-                  <br />
-                  Product Name:
+                  
+                  &nbsp;&nbsp;&nbsp;Product Name:
+                  <br/>
                   <TextField
-                    id="productname"
-                    label="eg:Apple"
+                    placeholder="eg:Apple"
                     type="text"
                     name="Productname"
                     value={inputs.Productname}
                     onChange={inputHandler}
                   />
-                  <br></br>
-                  Price:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <TextField
-                    id="Price"
-                    label="eg:260"
-                    type="number"
-                    name="Productprice"
-                    value={inputs.Productprice}
-                    onChange={inputHandler}
-                  />
-                  <br></br>
-                  Quantity:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <TextField
-                    id="Quantity"
-                    label="Quantity Kg / Lr"
-                    type="number"
-                    name="Quantity"
-                    value={inputs.Quantity}
-                    onChange={inputHandler}
-                  />
-               
-                  <br></br>
-                  Category:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <FormControl sx={{ m: 1, width: '25ch' }}>
+                 <br/>
+                 <br/>   
+                  &nbsp;&nbsp;&nbsp;Category:
+                  <br/>
+
+                  &nbsp;&nbsp;&nbsp;
                     <select
                       className="boxcategory"
                       name="Cid"
@@ -173,21 +135,51 @@ const Addproduct = (props) => {
                         );
                       })}
                     </select>
-                    <br></br>
-                  </FormControl>
+                   <br/>           
                   <br></br>
-                  Description:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  &nbsp;&nbsp;&nbsp;Price:
+                  <br/>
                   <TextField
+                    id="Price"
+                    placeholder="In Kg"
+                    type="number"
+                    name="Productprice"
+                    value={inputs.Productprice}
+                    onChange={inputHandler}
+                  />
+                  <br></br>
+                  &nbsp;&nbsp;&nbsp;Quantity:
+                  <br/>   
+                  <TextField
+                    id="Quantity"
+                    placeholder="Quantity Kg / Lr"
+                    type="number"
+                    name="Quantity"
+                    value={inputs.Quantity}
+                    onChange={inputHandler}
+                  />
+               
+                  
+                  <br></br>
+                  &nbsp;&nbsp;&nbsp;Description:
+                  <br/>
+                  &nbsp;&nbsp;&nbsp;<textarea
                     id="Description"
                     label="Three ore four word"
                     type="text"
                     name="Description"
+                    rows="3"
                     value={inputs.Description}
                     onChange={inputHandler}
                   />
                   <br></br>
-                  Status:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <select className="boxact" name="Status" value={inputs.Status} onChange={inputHandler}>
+                  &nbsp;&nbsp;&nbsp;<label htmlFor="file">Image: </label>
+                  <br/>
+                  &nbsp;&nbsp;&nbsp;<input type="file" className="icon" onChange={handleImage} />
+                  <br />
+                  <br />
+                  &nbsp;&nbsp;&nbsp;Status:<br/>
+                  &nbsp;&nbsp;&nbsp;<select className="boxact" name="Status" value={inputs.Status} onChange={inputHandler}>
                     <option value="Active">Active</option>
                     <option value="InActive">InActive</option>
                   </select>
@@ -195,7 +187,7 @@ const Addproduct = (props) => {
                   <br />
 
                   <div className="button">
-                    <Button variant="contained" color="success" onClick={addHandler}>
+                  &nbsp;&nbsp;&nbsp;<Button variant="contained" color="success" onClick={addHandler}>
                       {loading ? <CircularProgress size={24} /> : 'Submit'}
                     </Button>
                     
