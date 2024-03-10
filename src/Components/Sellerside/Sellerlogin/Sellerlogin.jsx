@@ -18,7 +18,9 @@ const Sellerlogin = () => {
 
       console.log('Login successful', response.data);
       localStorage.setItem('token', response.data.token);
-      navigate(`/profile/${response.data._id}`); // navigate to the profile page with seller's ID
+      localStorage.setItem('sellerId', response.data._id); // Store seller ID in local storage
+
+      navigate(`/profile/${response.data._id}`);
     } catch (error) {
       console.error('Login failed', error.response.data);
       if (error.response.status === 401) {
@@ -34,7 +36,7 @@ const Sellerlogin = () => {
       <div className="sellercontainer">
         <div className="sellerimage-section">
           <div className="sellerimage-wrapper">
-            <img src={require('./seller2.jpg')} alt="not found" />
+            <img src={require('./Seller.jpg')} alt="not found" />
           </div>
           <div className="sellercontent-container">
             <h1 className="sellersection-heading">THE BEST MARKETING OF ALL IS <span>HAPPY CLIENTS..</span></h1>

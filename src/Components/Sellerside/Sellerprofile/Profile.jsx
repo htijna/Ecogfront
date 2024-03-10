@@ -9,46 +9,24 @@ import baseUrl from '../../../Api';
 const Profile = () => {
   const { id } = useParams();
   const [profile, setProfile] = useState(null);
-  const [sellerId, setSellerId] = useState(null);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
-    setSellerId(id); // Set sellerId state with the id from params
+    axios.get(`${baseUrl}/sauth/sellerprofile/${id}`)
+      .then(response => {
+        console.log(response.data);
+        setProfile(response.data);
+      })
+      .catch(err => {
+        setError(err.message);
+        console.log('Error fetching user profile:', err);
+      });
   }, [id]);
-
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/sauth/profileview/${id}`);
-        setProfile(response.data);
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      }
-    };
-
-    fetchProfile();
-  }, [sellerId]);
-
-  // Fetch profile data again when navigating back to the profile page
-  useEffect(() => {
-    const fetchProfile = async () => {
-      try {
-        const response = await axios.get(`${baseUrl}/sauth/profileview/${id}`);
-        setProfile(response.data);
-      } catch (error) {
-        console.error('Error fetching profile:', error);
-      }
-    };
-
-    // Check if the profile data is already fetched to avoid unnecessary requests
-    if (!profile || profile._id !== id) {
-      fetchProfile();
-    }
-  }, [id, profile]);
 
   return (
     <div className='single'>
       <div className='singleContainer'>
-      <Sellernavbar sellerId={sellerId} />
+      <Sellernavbar id={id} />
         <div className="top">
           <div className="left">
             <h1 className="title">PROFILE</h1>

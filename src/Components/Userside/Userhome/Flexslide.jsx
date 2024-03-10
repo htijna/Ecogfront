@@ -8,19 +8,40 @@ import Minfooter from '../Userfooter/Minfooter'
 import { useNavigate } from 'react-router-dom'
 
 const Flexslide = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Define navigate variable
 
   useEffect(() => {
-    // Check for the presence of the token in localStorage or wherever you store it
-    const token = localStorage.getItem('token');
-    console.log('token',token);
+    const getToken = () => {
+      return localStorage.getItem('token');
+    };
+  
+    const token = getToken();
     if (!token) {
-      // Token is not present, navigate to the login page
-      navigate('/');
+      navigate('/login');
+    } else {
+      console.log('Token fetched:', token);
+      const tokenParts = token.split('.');
+      if (tokenParts.length !== 3) {
+        console.error('Invalid token format');
+        navigate('/login');
+        return;
+      }
+      const payload = tokenParts[1];
+      console.log('Token Payload:', payload);
+      try {
+        const decodedPayload = atob(payload);
+        console.log('Decoded Payload:', decodedPayload);
+        const parsedPayload = JSON.parse(decodedPayload);
+        const userId = parsedPayload.userId; // Assuming the payload contains userId
+        console.log('User Id:', userId);
+        // Further actions with userId if needed
+      } catch (error) {
+        console.error('Error decoding token payload:', error);
+        navigate('/login');
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []); // Empty dependency array means this effect runs once when the component mounts
-
+  }, [navigate]);
+  
   return (
     <div className='midall'>
       

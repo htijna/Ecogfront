@@ -40,16 +40,22 @@ const CategoryPage = () => {
   }, [category]);
 
   const addToCart = (product) => {
-    const { _id, Productname, Productprice, Quantity, Description } = product;
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      console.error('User ID not found in localStorage');
+      return;
+    }
+  
     const productDetails = {
-      productId: _id,
-      productName: Productname,
-      productPrice: Productprice,
-      productQuantity: Quantity,
-      productDescription: Description,
+      userId: userId,
+      productId: product._id,
+      productName: product.Productname,
+      productPrice: product.Productprice,
+      productQuantity: product.Quantity,
+      productDescription: product.Description,
     };
-
-    axios.post(baseUrl + '/cart/cartnew', productDetails)
+  
+    axios.post(`${baseUrl}/cart/cartnew`, productDetails)
       .then(response => {
         console.log('Item added to cart:', response.data);
         alert('Adding ...');
@@ -59,26 +65,34 @@ const CategoryPage = () => {
         console.error('Error adding item to cart:', error);
       });
   };
+  
 
   const buyNow = (product) => {
-    const { _id, Productname, Productprice, Quantity, Description } = product; // Function implementation for buying now
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      console.error('User ID not found in localStorage');
+      return;
+    }
+  
     const productDetails = {
-      productId: _id,
-      productName: Productname,
-      productPrice: Productprice,
-      productQuantity: Quantity,
-      productDescription: Description
+      userId: userId,
+      productId: product._id,
+      productName: product.Productname,
+      productPrice: product.Productprice,
+      productQuantity: product.Quantity,
+      productDescription: product.Description
     };
     
-    axios.post(baseUrl + '/ordered/neworder', productDetails)
-    .then(response => {
-      console.log('Ordering:', response.data);
-      navigate('/oview');
-    })
-    .catch(error => {
-      console.error('Error in Ordering', error);
-    });
+    axios.post(`${baseUrl}/ordered/neworder`, productDetails)
+      .then(response => {
+        console.log('Ordering:', response.data);
+        navigate('/oview');
+      })
+      .catch(error => {
+        console.error('Error in Ordering', error);
+      });
   };
+  
 
   return (
     <div>
@@ -100,7 +114,6 @@ const CategoryPage = () => {
                   <div className="content">
                     <h2 className="profile-name">{value.Productname} <span className='dashline'>  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; </span>
                       <span className='price'>Price: {value.Productprice}</span> </h2>
-                    {/* <p className="price">Price: {value.Productprice}</p> */}
                     <p className="quantity">
                       Quantity: {value.Quantity}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Category: {value.prod[0]?.Categoryname}
                     </p>

@@ -3,7 +3,7 @@ import './flexer.scss'
 
 import ecog from '../../../imgs/ecog.png'
 import vegetable from '../Userimg/vegit.jpg'
-
+import fruits from '../Userimg/fruits.jpg'
 const Slidebar = () => {
 
     
@@ -48,7 +48,7 @@ const Slidebar = () => {
       </div>
 
       <div className="card">
-        <img className="background" src="./assets/fruits.jpg" alt=""/>
+        <img className="background" src={fruits} alt=""/>
 
         <div className="card-content">
           <div className="profile-image">

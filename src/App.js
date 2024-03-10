@@ -33,6 +33,7 @@ import Profile from './Components/Sellerside/Sellerprofile/Profile';
 import Orderview from './Components/Userside/Userhome/Orderview';
 import Usersentry from './Components/Adminside/Adminadd/Usersentry';
 import Sellerentry from './Components/Adminside/Adminadd/Sellerentry';
+import Userprofile from './Components/Userside/Userhome/Userprofile';
 
 function App() {
  
@@ -43,7 +44,7 @@ function App() {
           {/* Userside */}
           <Route path='/signup' element={<Usersignup />} />
           <Route path='/' element={<Login />} />
-          <Route path='/userside' element={<Flexslide /> } />
+          <Route path='/userside/:id' element={<Flexslide /> } />
           <Route path='/footer' element={<Footer />} />
           <Route path='/mid' element={<Midpart />} />
           <Route path='/cart' element={ <Cart /> } />
@@ -52,6 +53,8 @@ function App() {
          <Route path='/filter' element={<CategoryFilter />} />
           <Route path='/category/:category' element={ <CategoryPage />} />
           <Route path='/order' element={ <Orderview /> } />
+
+          <Route path='/uprofile/:id' element={<Userprofile method='get' />} />
           
 
           
@@ -63,7 +66,7 @@ function App() {
           <Route path='/pview/:id' element={<Productview method='get'/>} />
           <Route path='/productlist' element={<Productlist method='get'/>} />
           <Route path='/products' element={<Recentlyadd />} />
-          <Route path='/profile/:id' element={<Profile method='get'/>} />
+          <Route path="/profile/:id" element={<Profile />} />
           <Route path='/sellerorder' element={<Incomingorder />} />
 
           {/* Admin */}

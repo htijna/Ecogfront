@@ -31,19 +31,54 @@ import PreviewIcon from '@mui/icons-material/Preview';
 
 
 
-const Sellernavbar = ({ sellerId }) => {
+const Sellernavbar = ({id}) => {
   const [searchQuery, setSearchQuery] = useState('');
-  const { id: profileId } = useParams(); // Use 'id' instead of 'Id'
+
+  const navigate = useNavigate();
+  useEffect(() => {
+    const getToken = () => {
+      return localStorage.getItem('token');
+    };
+  
+    const token = getToken();
+    if (!token) {
+      navigate('/sellerlogin');
+    } else {
+      console.log('Token fetched:', token);
+      const tokenParts = token.split('.');
+      if (tokenParts.length !== 3) {
+        console.error('Invalid token format');
+        navigate('/sellerlogin');
+        return;
+      }
+      const payload = tokenParts[1];
+      console.log('Token Payload:', payload);
+      try {
+        const decodedPayload = atob(payload);
+        console.log('Decoded Payload:', decodedPayload);
+        const parsedPayload = JSON.parse(decodedPayload);
+        const sellerId = parsedPayload.sellerId; // Assuming the payload contains userId
+        console.log('Seller Id:', sellerId);
+        // Further actions with userId if needed
+      } catch (error) {
+        console.error('Error decoding token payload:', error);
+        navigate('/sellerlogin');
+      }
+    }
+  }, [navigate]);
+  
+
+  
 
 
-console.log('id', sellerId);
+console.log('id');
   const handleSearch = () => {
     console.log("Search query: ", searchQuery);
     // Implement your search functionality here
   };
   
 
-  const navigate = useNavigate();
+  
   const handleLogout = () => {
       localStorage.removeItem("token");
       // Navigate to the login page
@@ -79,7 +114,7 @@ console.log('id', sellerId);
           {/* <Link to="/seller" style={{ textDecoration: "none" }}>
             <p className='hhicon'><DashboardIcon  />Dashboard</p></Link> */}
 
-<Link to={`/profile/${sellerId}`} style={{ textDecoration: "none" }}>
+<Link to={`/profile/${id}`} style={{ textDecoration: "none" }}>
   <p className='hhicon'><AccountCircleOutlinedIcon  />Profile</p>
 </Link>
 
@@ -91,7 +126,7 @@ console.log('id', sellerId);
           <Link to="/productlist">
             <p className='hhicon'><StorefrontIcon  /> View Product</p>
           </Link>
-          <Link to="/sellerorder">
+          <Link to='/sellerorder'>
             <p className='hhicon'><LocalShippingIcon />Orders</p>
           </Link>
         </div> 

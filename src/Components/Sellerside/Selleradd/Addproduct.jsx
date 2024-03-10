@@ -1,19 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { TextField, Button, FormControl, Box, CircularProgress } from '@mui/material';
+import { TextField, Button, Box, CircularProgress } from '@mui/material';
 
 import './addproduct.scss';
 import { useNavigate } from 'react-router-dom';
 import baseUrl from '../../../Api';
-
 import Sellernavbar from '../Sellerhome/Sellernavbar';
-
 
 const Addproduct = (props) => {
   const [category, setCategory] = useState([]);
   const [selectedImage, setSelectedImage] = useState(null);
   const [loading, setLoading] = useState(false); // State for loading indicator
-
   const [inputs, setInputs] = useState({
     Productname: '',
     Productprice: '',
@@ -22,7 +19,9 @@ const Addproduct = (props) => {
     Status: 'Active',
     Description: '',
     Photo: '',
+    sellerId:'',
   });
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -39,29 +38,44 @@ const Addproduct = (props) => {
     }));
   };
 
-  const addHandler = () => {
-    setLoading(true); // Set loading to true when submitting form
-    const formData = new FormData();
-    formData.append('Productname', inputs.Productname);
-    formData.append('Productprice', inputs.Productprice);
-    formData.append('Quantity', inputs.Quantity);
-    formData.append('Cid', inputs.Cid);
-    formData.append('Status', inputs.Status);
-    formData.append('Description', inputs.Description);
-    formData.append('Photo', selectedImage);
+const addHandler = () => {
+  setLoading(true); // Set loading to true when submitting form
 
-    axios
-      .post(baseUrl + '/product/productnew', formData)
-      .then((response) => {
-        setLoading(false); // Set loading to false after response
-        alert('record saved');
-        navigate('/products');
-      })
-      .catch((err) => {
-        setLoading(false); // Set loading to false if there's an error
-        console.log('error', err);
-      });
-  };
+
+
+  // Set the sellerId in the FormData object
+  const formData = new FormData();
+  formData.append('sellerId', inputs.sellerId);
+  formData.append('Productname', inputs.Productname);
+  formData.append('Productprice', inputs.Productprice);
+  formData.append('Quantity', inputs.Quantity);
+  formData.append('Cid', inputs.Cid);
+  formData.append('Status', inputs.Status);
+  formData.append('Description', inputs.Description);
+  formData.append('Photo', selectedImage);
+    // Get the sellerId from localStorage
+  const sellerId = localStorage.getItem('sellerId');
+  
+  // Check if sellerId is available in localStorage
+  if (!sellerId) {
+    console.error('Seller ID not found in localStorage');
+    return;
+  }
+
+  console.log('Seller ID retrieved from localStorage:', sellerId);
+
+  axios
+    .post(baseUrl + '/product/productnew', formData)
+    .then((response) => {
+      setLoading(false); // Set loading to false after response
+      alert('Record saved');
+      navigate('/products');
+    })
+    .catch((err) => {
+      setLoading(false); // Set loading to false if there's an error
+      console.error('Error adding product:', err);
+    });
+};
 
   const handleImage = (event) => {
     const file = event.target.files[0];
@@ -73,127 +87,132 @@ const Addproduct = (props) => {
       .get(baseUrl + '/category/categoryview')
       .then((response) => {
         setCategory(response.data);
-        
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.error('Error fetching categories:', err));
   }, []);
 
   return (
-    <div className="new">
-      <div className="newContainer">
-        <Sellernavbar />
-        <div className="top">
-          <h1>Add product</h1>
-        </div>
-        <div className="bottom">
-          <div className="left">
-            <img
-              src={selectedImage ? URL.createObjectURL(selectedImage) : 'https://i.ibb.co/KW8tBB8/img1.jpg'}
-              alt="Not Found"
-              className="imgupload"
-            />
+    <div>
+      <Sellernavbar />
+      <div className="new">
+        <div className="newContainer">
+          <div className="top">
+            <h1>Add product</h1>
           </div>
-
-          <div className="right">
-            <div className="alignform">
-              <Box
-                component="form"
-                sx={{
-                  '& .MuiTextField-root': { m: 1.6, width: '29ch' },
-                }}
-                noValidate
-                autoComplete="off"
-              >
-                <div className="filephoto">
-                  
-                  &nbsp;&nbsp;&nbsp;Product Name:
-                  <br/>
-                  <TextField
-                    placeholder="eg:Apple"
-                    type="text"
-                    name="Productname"
-                    value={inputs.Productname}
-                    onChange={inputHandler}
-                  />
-                 <br/>
-                 <br/>   
-                  &nbsp;&nbsp;&nbsp;Category:
-                  <br/>
-
-                  &nbsp;&nbsp;&nbsp;
+          <div className="bottom">
+            <div className="left">
+              <img
+                src={selectedImage ? URL.createObjectURL(selectedImage) : 'https://i.ibb.co/KW8tBB8/img1.jpg'}
+                alt="Not Found"
+                className="imgupload"
+              />
+            </div>
+            <div className="right">
+              <div className="alignform">
+                <Box
+                  component="form"
+                  sx={{
+                    '& .MuiTextField-root': { m: 1.6, width: '30ch' },
+                  }}
+                  noValidate
+                  autoComplete="off"
+                >
+                  <div className="filephoto">
+                    &nbsp;&nbsp;&nbsp;Product Name:
+                    <br />
+                    <TextField
+                      placeholder="eg:Apple"
+                      type="text"
+                      name="Productname"
+                      value={inputs.Productname}
+                      onChange={inputHandler}
+                    />
+                    <br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;Category:
+                    <br />
+                    &nbsp;&nbsp;&nbsp;
                     <select
                       className="boxcategory"
                       name="Cid"
                       value={inputs.Cid}
                       onChange={inputHandler}
                     >
-                      {category.map((value, index) => {
-                        return (
-                          <option key={index} value={value._id}>
-                            {value.Categoryname}
-                          </option>
-                        );
-                      })}
+                      {category.map((value, index) => (
+                        <option key={index} value={value._id}>
+                          {value.Categoryname}
+                        </option>
+                      ))}
                     </select>
-                   <br/>           
-                  <br></br>
-                  &nbsp;&nbsp;&nbsp;Price:
-                  <br/>
-                  <TextField
-                    id="Price"
-                    placeholder="In Kg"
-                    type="number"
-                    name="Productprice"
-                    value={inputs.Productprice}
-                    onChange={inputHandler}
-                  />
-                  <br></br>
-                  &nbsp;&nbsp;&nbsp;Quantity:
-                  <br/>   
-                  <TextField
-                    id="Quantity"
-                    placeholder="Quantity Kg / Lr"
-                    type="number"
-                    name="Quantity"
-                    value={inputs.Quantity}
-                    onChange={inputHandler}
-                  />
-               
-                  
-                  <br></br>
-                  &nbsp;&nbsp;&nbsp;Description:
-                  <br/>
-                  &nbsp;&nbsp;&nbsp;<textarea
-                    id="Description"
-                    label="Three ore four word"
-                    type="text"
-                    name="Description"
-                    rows="3"
-                    value={inputs.Description}
-                    onChange={inputHandler}
-                  />
-                  <br></br>
-                  &nbsp;&nbsp;&nbsp;<label htmlFor="file">Image: </label>
-                  <br/>
-                  &nbsp;&nbsp;&nbsp;<input type="file" className="icon" onChange={handleImage} />
-                  <br />
-                  <br />
-                  &nbsp;&nbsp;&nbsp;Status:<br/>
-                  &nbsp;&nbsp;&nbsp;<select className="boxact" name="Status" value={inputs.Status} onChange={inputHandler}>
-                    <option value="Active">Active</option>
-                    <option value="InActive">InActive</option>
-                  </select>
-                  <br />
-                  <br />
-
-                  <div className="button">
-                  &nbsp;&nbsp;&nbsp;<Button variant="contained" color="success" onClick={addHandler}>
-                      {loading ? <CircularProgress size={24} /> : 'Submit'}
-                    </Button>
-                    
+                    <br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;Price:
+                    <br />
+                    <TextField
+                      id="Price"
+                      placeholder="In Kg"
+                      type="number"
+                      name="Productprice"
+                      value={inputs.Productprice}
+                      onChange={inputHandler}
+                    />
+                    <br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;Quantity:
+                    <br />
+                    <TextField
+                      id="Quantity"
+                      placeholder="Quantity Kg / Lr"
+                      type="number"
+                      name="Quantity"
+                      value={inputs.Quantity}
+                      onChange={inputHandler}
+                    />
+                    <br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;Description:
+                    <br />
+                    &nbsp;&nbsp;&nbsp;
+                    <textarea
+                      id="Description"
+                      className="boxcategory"
+                      label="Three ore four word"
+                      type="text"
+                      name="Description"
+                      rows="3"
+                      value={inputs.Description}
+                      onChange={inputHandler}
+                    />
+                    <br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;<label htmlFor="file">Image: </label>
+                    <br />
+                    &nbsp;&nbsp;&nbsp;<input type="file" className="icon" onChange={handleImage} />
+                    <br />
+                    <br />
+                    &nbsp;&nbsp;&nbsp;Status:
+                    <br />
+                    &nbsp;&nbsp;&nbsp;
+                    <select
+                      className="boxact"
+                      name="Status"
+                      value={inputs.Status}
+                      onChange={inputHandler}
+                    >
+                      <option value="Active">Active</option>
+                      <option value="InActive">InActive</option>
+                    </select>
+                    <br />
+                    <br />
+                    <div className="button">
+                      &nbsp;&nbsp;&nbsp;
+                      <Button variant="contained" color="success" onClick={addHandler}>
+                        {loading ? <CircularProgress size={24} /> : 'Submit'}
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              </Box>
+                </Box>
+              </div>
             </div>
           </div>
         </div>

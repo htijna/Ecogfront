@@ -51,8 +51,10 @@ const Flexdraw = () => {
   return (
     <div>
       <nav className="hnavbar">
-        <div className="hlogo">
-          <a href="#"><img src={ecog} className='hpi' alt="Your SVG" /></a>
+        <div className="hlogo"> <Link  to="/uprofile/:id" style={{ textDecoration: "none" }}>
+            
+            
+          <img src={ecog} className='hpi' alt="Your SVG" /></Link>
         </div>
         <div className="hmenu">
           <div className="hmenu-links">
@@ -71,7 +73,7 @@ const Flexdraw = () => {
                 </button>
               </div>
             </div>
-            <Link to="/userside" style={{ textDecoration: "none" }}><p className='hhicon'><HomeIcon  />Home</p></Link>
+            <Link to="/userside/:id" style={{ textDecoration: "none" }}><p className='hhicon'><HomeIcon  />Home</p></Link>
             <div className="hdropdown">
               <button className="hdropdown-button" onClick={() => setIsOpen(!isOpen)}>
                 <span style={{fontSize:'17px'}}><p className='hhicon'> <CategoryIcon  /> Categories<KeyboardArrowDownIcon/></p> </span>
