@@ -57,8 +57,8 @@ const Sellernavbar = ({id}) => {
         const decodedPayload = atob(payload);
         console.log('Decoded Payload:', decodedPayload);
         const parsedPayload = JSON.parse(decodedPayload);
-        const sellerId = parsedPayload.sellerId; // Assuming the payload contains userId
-        console.log('Seller Id:', sellerId);
+        const sellerId = parsedPayload.sellerId; 
+        console.log('seller Id:', sellerId);
         // Further actions with userId if needed
       } catch (error) {
         console.error('Error decoding token payload:', error);
@@ -68,10 +68,7 @@ const Sellernavbar = ({id}) => {
   }, [navigate]);
   
 
-  
 
-
-console.log('id');
   const handleSearch = () => {
     console.log("Search query: ", searchQuery);
     // Implement your search functionality here
@@ -114,7 +111,7 @@ console.log('id');
           {/* <Link to="/seller" style={{ textDecoration: "none" }}>
             <p className='hhicon'><DashboardIcon  />Dashboard</p></Link> */}
 
-<Link to={`/profile/${id}`} style={{ textDecoration: "none" }}>
+<Link to="/profile/:id" style={{ textDecoration: "none" }}>
   <p className='hhicon'><AccountCircleOutlinedIcon  />Profile</p>
 </Link>
 

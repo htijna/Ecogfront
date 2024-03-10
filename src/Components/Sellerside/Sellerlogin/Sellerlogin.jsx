@@ -18,7 +18,7 @@ const Sellerlogin = () => {
 
       console.log('Login successful', response.data);
       localStorage.setItem('token', response.data.token);
-      localStorage.setItem('sellerId', response.data._id); // Store seller ID in local storage
+      localStorage.setItem('sellerId', response.data.sellerId); // Store user ID in local storage
 
       navigate(`/profile/${response.data._id}`);
     } catch (error) {

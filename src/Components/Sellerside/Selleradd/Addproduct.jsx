@@ -24,6 +24,9 @@ const Addproduct = (props) => {
 
   const navigate = useNavigate();
 
+
+  
+
   useEffect(() => {
     if (props.method === 'put' && props.data) {
       setInputs(props.data);
@@ -38,44 +41,65 @@ const Addproduct = (props) => {
     }));
   };
 
-const addHandler = () => {
-  setLoading(true); // Set loading to true when submitting form
 
-
-
-  // Set the sellerId in the FormData object
-  const formData = new FormData();
-  formData.append('sellerId', inputs.sellerId);
-  formData.append('Productname', inputs.Productname);
-  formData.append('Productprice', inputs.Productprice);
-  formData.append('Quantity', inputs.Quantity);
-  formData.append('Cid', inputs.Cid);
-  formData.append('Status', inputs.Status);
-  formData.append('Description', inputs.Description);
-  formData.append('Photo', selectedImage);
-    // Get the sellerId from localStorage
-  const sellerId = localStorage.getItem('sellerId');
+  const getSellerIdFromLocalStorage = () => {
+    // Retrieve seller ID from local storage
+    const sellerId = localStorage.getItem('sellerId');
+    
+    // Check if seller ID exists
+    if (!sellerId) {
+      console.error('Seller ID not found in localStorage');
+      return null;
+    }
+    
+    // Return the seller ID
+    return sellerId;
+  };
   
-  // Check if sellerId is available in localStorage
+
+  const addHandler = () => {
+    setLoading(true); // Set loading to true when submitting form
+  
+    setLoading(true); // Set loading to true when submitting form
+
+  // Retrieve seller ID from local storage
+  const sellerId = getSellerIdFromLocalStorage();
+
+  // Check if sellerId is available
   if (!sellerId) {
-    console.error('Seller ID not found in localStorage');
-    return;
+    return; // Exit function if sellerId is not available
   }
 
   console.log('Seller ID retrieved from localStorage:', sellerId);
-
-  axios
-    .post(baseUrl + '/product/productnew', formData)
-    .then((response) => {
-      setLoading(false); // Set loading to false after response
-      alert('Record saved');
-      navigate('/products');
-    })
-    .catch((err) => {
-      setLoading(false); // Set loading to false if there's an error
-      console.error('Error adding product:', err);
-    });
-};
+  
+  
+    // Set the sellerId in the FormData object
+    const formData = new FormData();
+    formData.append('sellerId', sellerId); // Ensure 'SellerId' matches server's expected field name
+    formData.append('Productname', inputs.Productname);
+    formData.append('Productprice', inputs.Productprice);
+    formData.append('Quantity', inputs.Quantity);
+    formData.append('Cid', inputs.Cid);
+    formData.append('Status', inputs.Status);
+    formData.append('Description', inputs.Description);
+    formData.append('Photo', selectedImage);
+  
+    console.log('Form Data:', formData); // Log FormData object to check the contents
+  
+    axios
+      .post(baseUrl + '/product/productnew', formData)
+      .then((response) => {
+        setLoading(false); // Set loading to false after response
+        alert('Record saved');
+        navigate('/products');
+      })
+      .catch((err) => {
+        setLoading(false); // Set loading to false if there's an error
+        console.error('Error adding product:', err);
+        console.log('Error Response:', err.response.data); // Log error response
+      });
+  };
+  
 
   const handleImage = (event) => {
     const file = event.target.files[0];
