@@ -25,7 +25,7 @@ const CategoryPage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    axios.get(`${baseUrl}/product/productview`)
+    axios.get(`${baseUrl}/product/userallproduct`)
       .then(response => {
         const filteredProducts = response.data.filter(
           item => item.prod && item.prod[0]?.Categoryname.toLowerCase() === category.toLowerCase()

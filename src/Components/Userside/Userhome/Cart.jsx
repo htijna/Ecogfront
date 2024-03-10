@@ -10,19 +10,25 @@ const Cart = () => {
   const [orders, setOrders] = useState([]);
   const location = useLocation();
 
+
   useEffect(() => {
     fetchOrders();
   }, []);
-
+  
   const fetchOrders = async () => {
-    try {
-      const response = await axios.get(baseUrl + '/cart/viewcart');
-      setOrders(response.data);
-    } catch (error) {
-      console.error('Error fetching orders:', error);
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      try {
+        const response = await axios.get(`${baseUrl}/cart/viewcart?userId=${userId}`);
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    } else {
+      console.error('User ID not found in localStorage');
     }
   };
-
+  
   
   const sendToSellerProfile = async () => {
     try {

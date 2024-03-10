@@ -13,16 +13,33 @@ const Productview = () => {
   const [product, setProduct] = useState([]);
   const [selected, setSelected] = useState();
   const [update, setUpdate] = useState(false);
-
-  useEffect(() => {
-    axios.get(baseUrl + "/product/productview")
-      .then(response => {
-        console.log(response.data)
-        setProduct(response.data)
-      })
-      .catch(err => console.log(err))
-  }, [])
-
+  const Productview = () => {
+    const [product, setProduct] = useState([]);
+    const [selected, setSelected] = useState();
+    const [update, setUpdate] = useState(false);
+  
+    useEffect(() => {
+      const sellerId = localStorage.getItem('sellerId');
+      const fetchProducts = async () => {
+        try {
+          const response = await axios.get(baseUrl + '/product/productview', { headers: { sellerId } });
+          setProduct(response.data);
+        } catch (error) {
+          console.error('Error fetching products:', error);
+          // Handle error gracefully, e.g., display a message to the user
+        }
+      };
+    
+      if (sellerId) {
+        fetchProducts();
+      } else {
+        console.error('Seller ID not found in localStorage');
+        // Handle the case where sellerId is not found in localStorage
+      }
+    }, []); // Empty dependency array to run the effect only once on component mount
+    
+  }
+  
   const deletevalues =(id)=>{
     console.log("Inactive",id)
     axios.put(baseUrl + "/product/delete/"+id)

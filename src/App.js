@@ -36,7 +36,7 @@ import Sellerentry from './Components/Adminside/Adminadd/Sellerentry';
 import Userprofile from './Components/Userside/Userhome/Userprofile';
 
 function App() {
- 
+  const sellerId = localStorage.getItem('sellerId');
   return (
     <div>
       <BrowserRouter>
@@ -63,7 +63,7 @@ function App() {
           <Route path='/sellersignup' element={<Sellersignup />} />
           <Route path='/sellerlogin' element={<Sellerlogin />} />
           <Route path='/add' element={<Addproduct method='post' />} />
-          <Route path='/pview/:id' element={<Productview method='get'/>} />
+          <Route path='/pview/:id' element={<Productview method='get' sellerId={sellerId} />} />
           <Route path='/productlist' element={<Productlist method='get'/>} />
           <Route path='/products' element={<Recentlyadd />} />
           <Route path="/profile/:id" element={<Profile />} />
