@@ -1,28 +1,32 @@
-import React, { useEffect, useState } from 'react'
-import baseUrl from '../../../Api';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
+import baseUrl from '../../../Api';
 import Flexdraw from './Flexdraw';
 import Footer from '../Userfooter/Footer';
-import { Link } from 'react-router-dom';
 
 const Orderview = () => {
   const [orders, setOrders] = useState([]);
+
   useEffect(() => {
     fetchOrders(); // Fetch orders once on component mount
   }, []);
-
+   
   const fetchOrders = async () => {
-    try {
-      const response = await axios.get(baseUrl + '/sellerview/sellervieworder');
-      setOrders(response.data.map(order => ({
-        ...order,
-        orderDate: moment(order.orderDate).format('YYYY-MM-DD') 
-      })));
-    } catch (error) {
-      console.error('Error fetching orders:', error);
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+      try {
+        const response = await axios.get(`${baseUrl}/sellerview/myorder?userId=${userId}`);
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    } else {
+      console.error('userID not found in localStorage');
     }
   };
+  
 
   return (
     <div className="midall">
@@ -56,8 +60,7 @@ const Orderview = () => {
                   <td>{item.productQuantity}</td>
                   <td>{item.productDescription}</td>
                   <td>{item.status}</td>
-                  <td>{item.orderDate}</td> 
-                 
+                  <td>{item.orderDate}</td>
                 </tr>
               ))}
             </tbody>
@@ -65,11 +68,10 @@ const Orderview = () => {
         </div>
       )}
       <div className="homefooterbottom"></div>
-      <div>
-        <Footer />
-      </div>
+      <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> 
+      <Footer />
     </div>
-  )
-}
+  );
+};
 
-export default Orderview
+export default Orderview;

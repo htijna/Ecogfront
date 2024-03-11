@@ -91,6 +91,7 @@ const Addproduct = (props) => {
       .then((response) => {
         setLoading(false); // Set loading to false after response
         alert('Record saved');
+        console.log('saved', response);
         navigate('/products');
       })
       .catch((err) => {

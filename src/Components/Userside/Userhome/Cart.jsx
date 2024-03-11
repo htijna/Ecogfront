@@ -5,7 +5,8 @@ import './cart.scss';
 import Footer from '../Userfooter/Footer';
 import axios from 'axios';
 import baseUrl from '../../../Api';
-
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 const Cart = () => {
   const [orders, setOrders] = useState([]);
   const location = useLocation();
@@ -21,6 +22,7 @@ const Cart = () => {
       try {
         const response = await axios.get(`${baseUrl}/cart/viewcart?userId=${userId}`);
         setOrders(response.data);
+        console.log(orders);
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
@@ -50,16 +52,27 @@ const Cart = () => {
   const removeFromCart = async (id) => {
     try {
       await axios.delete(`${baseUrl}/cart/remove/${id}`);
-      fetchOrders(); // Fetch orders again to update the cart
+      // Update the orders state by filtering out the removed item
+      setOrders(prevOrders => prevOrders.filter(item => item._id !== id));
     } catch (error) {
       console.error('Error removing item from cart:', error);
     }
   };
+  
 
   const handleIncrement = async (id) => {
     try {
       await axios.put(`${baseUrl}/cart/increment/${id}`);
-      fetchOrders(); // Fetch orders again to update the cart
+      // After updating the quantity on the server, we need to update the local state
+      setOrders(prevOrders => {
+        return prevOrders.map(order => {
+          if (order._id === id) {
+            // Increment the quantity of the specific item
+            return { ...order, productQuantity: order.productQuantity + 1 };
+          }
+          return order;
+        });
+      });
     } catch (error) {
       console.error('Error incrementing item quantity:', error);
     }
@@ -68,7 +81,16 @@ const Cart = () => {
   const handleDecrement = async (id) => {
     try {
       await axios.put(`${baseUrl}/cart/decrement/${id}`);
-      fetchOrders(); // Fetch orders again to update the cart
+      // After updating the quantity on the server, we need to update the local state
+      setOrders(prevOrders => {
+        return prevOrders.map(order => {
+          if (order._id === id && order.productQuantity > 1) {
+            // Decrement the quantity of the specific item, but ensure it doesn't go below 1
+            return { ...order, productQuantity: order.productQuantity - 1 };
+          }
+          return order;
+        });
+      });
     } catch (error) {
       console.error('Error decrementing item quantity:', error);
     }
@@ -108,9 +130,9 @@ const Cart = () => {
                   <td>{item.productPrice}</td>
                   <td>
                     <div className="quantity-control">
-                      <button onClick={() => handleDecrement(item._id)}>-</button>
-                      <span>{item.productQuantity}</span>
-                      <button onClick={() => handleIncrement(item._id)}>+</button>
+                      <button onClick={() => handleDecrement(item._id)}><IndeterminateCheckBoxIcon/></button>&nbsp;&nbsp;
+                      <span>{item.productQuantity}</span>&nbsp;&nbsp;
+                      <button onClick={() => handleIncrement(item._id)}><AddBoxIcon/></button>
                     </div>
                   </td>
                   <td>{item.productDescription}</td>
@@ -130,6 +152,7 @@ const Cart = () => {
       <button className="proceed-button" onClick={sendToSellerProfile}>
         Proceed to Order
       </button>
+      <br></br> <br></br> <br></br> 
       <div className="homefooterbottom"></div>
       <div>
         <Footer />

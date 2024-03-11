@@ -10,16 +10,30 @@ const Userprofile = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    axios.get(`${baseUrl}/auth/userprofile/${id}`)
-      .then(response => {
-        console.log(response.data);
-        setProfile(response.data);
-      })
-      .catch(err => {
+    const userId = localStorage.getItem('userId');
+    
+    const fetchData = async () => {
+      try {
+        if (userId) {
+          const response = await axios.get(`${baseUrl}/auth/userprofile?userId=${userId}`);
+          console.log(response.data);
+          setProfile(response.data);
+        }
+      } catch (err) {
         setError(err.message);
         console.log('Error fetching user profile:', err);
-      });
-  }, [id]);
+      }
+    };
+  
+    fetchData();
+  
+  }, [ setProfile, setError, baseUrl]);
+  
+
+
+
+
+
 
   return (
     <div className='single'>

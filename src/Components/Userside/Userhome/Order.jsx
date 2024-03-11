@@ -4,7 +4,8 @@ import baseUrl from '../../../Api';
 import Footer from '../Userfooter/Footer';
 import { Link } from 'react-router-dom';
 import Flexdraw from './Flexdraw';
-
+import AddBoxIcon from '@mui/icons-material/AddBox';
+import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 const Order = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -31,14 +32,18 @@ const Order = () => {
 
   const sendToSellerProfile = async (item) => {
     try {
-      await axios.post(baseUrl + '/sellerview/orderseller', item); // Sending the order details in the request body
+      const currentDate = new Date().toISOString();
+      const orderWithDate = { ...item, orderDate: currentDate };
+      await axios.post(baseUrl + '/sellerview/orderseller', orderWithDate); // Sending the order details in the request body
       console.log('Sending order to seller:', item);
-      alert('Ordering....');
-      // Assuming you want to navigate to another page after sending to seller
+      alert('Order placed successfully!');
+      setSelectedOrder(null); // Emptying the selected order
+      
     } catch (error) {
       console.error('Error sending order to seller:', error);
     }
   };
+  
 
   const handleIncrement = () => {
     const updatedOrder = { ...selectedOrder };
@@ -72,6 +77,7 @@ const Order = () => {
                 <th>Description</th>
                 <th>Status</th>
                 <th>Action</th>
+                
               </tr>
             </thead>
             <tbody>
@@ -84,14 +90,15 @@ const Order = () => {
                 <td>{selectedOrder.productPrice}</td>
                 <td>
                   <div className="quantity-control">
-                    <button onClick={handleDecrement}>-</button>
-                    <span>{selectedOrder.productQuantity}</span>
-                    <button onClick={handleIncrement}>+</button>
+                    <button onClick={handleDecrement}><AddBoxIcon/></button>&nbsp;&nbsp;
+                    <span>{selectedOrder.productQuantity}</span>&nbsp;&nbsp;
+                    <button onClick={handleIncrement}><IndeterminateCheckBoxIcon/></button>
                   </div>
                 </td>
                 <td>{selectedOrder.productDescription}</td>
                 
                 <td>{selectedOrder.status}</td>
+               
                 <td>
                   <button className="send-to-seller-button" onClick={() => sendToSellerProfile(selectedOrder)}>
                     Order
@@ -104,12 +111,20 @@ const Order = () => {
             {totalAmount}</div>
         </div>
       ) : (
-        <p className='nocart'>No items in the orders...!</p>
+        <p className='nocart'>No items in the orders...!
+         <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> 
+        
+        </p>
+        
       )}
-      <div className="homefooterbottom"></div>
-      <div>
-        <Footer />
+      <br></br>
+      <div className="homefooterbottom">
+      
       </div>
+      <div><Footer />
+      
+      </div>
+     
     </div>
   );
 };

@@ -4,6 +4,11 @@ import './flexer.scss'
 import ecog from '../../../imgs/ecog.png'
 import vegetable from '../Userimg/vegit.jpg'
 import fruits from '../Userimg/fruits.jpg'
+import dairy from '../Userimg/freshdairy.jpg'
+import nut from  '../Userimg/nuts.jpg'
+ import grains from '../Userimg/grains.jpg'
+ import spicy from '../Userimg/spicy.jpg'
+  import beans from '../Userimg/beans.jpg'
 const Slidebar = () => {
 
     
@@ -61,7 +66,7 @@ const Slidebar = () => {
       </div>
 
       <div className="card">
-        <img className="background" src="./assets/freshdairy.jpg" alt=""/>
+        <img className="background" src={dairy} alt=""/>
 
         <div className="card-content">
           <div className="profile-image">
@@ -74,7 +79,7 @@ const Slidebar = () => {
       </div>
 
       <div className="card">
-        <img className="background" src="./assets/nuts.jpg" alt=""/>
+        <img className="background" src={nut} alt=""/>
 
         <div className="card-content">
           <div className="profile-image">
@@ -87,7 +92,7 @@ const Slidebar = () => {
       </div>
 
       <div className="card">
-        <img className="background" src="./assets/grains.jpg" alt=""/>
+        <img className="background" src={grains} alt=""/>
 
         <div className="card-content">
           <div className="profile-image">
@@ -101,7 +106,7 @@ const Slidebar = () => {
       </div>
 
       <div className="card">
-        <img className="background" src="./assets/spicy.jpg" alt=""/>
+        <img className="background" src={spicy} alt=""/>
 
         <div className="card-content">
           <div className="profile-image">
@@ -119,7 +124,7 @@ const Slidebar = () => {
 
       
       <div className="card">
-        <img className="background" src="./assets/beans.jpg" alt=""/>
+        <img className="background" src={beans} alt=""/>
 
         <div className="card-content">
           <div className="profile-image">

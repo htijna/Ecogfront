@@ -13,20 +13,25 @@ const Incomingorder = () => {
   const [orders, setOrders] = useState([]); 
 
   useEffect(() => {
-    fetchOrders(); // Fetch orders once on component mount
+    fetchOrders();
   }, []);
-
+  
   const fetchOrders = async () => {
-    try {
-      const response = await axios.get(baseUrl + '/sellerview/sellervieworder');
-      setOrders(response.data.map(order => ({
-        ...order,
-        orderDate: moment(order.orderDate).format('YYYY-MM-DD') 
-      })));
-    } catch (error) {
-      console.error('Error fetching orders:', error);
+    const sellerId = localStorage.getItem('sellerId');
+    if (sellerId) {
+      try {
+        const response = await axios.get(`${baseUrl}/sellerview/sellervieworder?sellerId=${sellerId}`);
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    } else {
+      console.error('seller ID not found in localStorage');
     }
   };
+  
+
+
 
   const acceptOrder = async (orderId) => {
     try {

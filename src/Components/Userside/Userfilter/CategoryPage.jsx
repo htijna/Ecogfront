@@ -31,6 +31,7 @@ const CategoryPage = () => {
           item => item.prod && item.prod[0]?.Categoryname.toLowerCase() === category.toLowerCase()
         );
         setProducts(filteredProducts);
+        console.log(products);
         setLoading(false);
       })
       .catch(err => {
@@ -49,6 +50,7 @@ const CategoryPage = () => {
     const productDetails = {
       userId: userId,
       productId: product._id,
+      sellerId:product.sellerId,
       productName: product.Productname,
       productPrice: product.Productprice,
       productQuantity: product.Quantity,
@@ -57,7 +59,7 @@ const CategoryPage = () => {
   
     axios.post(`${baseUrl}/cart/cartnew`, productDetails)
       .then(response => {
-        console.log('Item added to cart:', response.data);
+        console.log('Item added to cart:', productDetails);
         alert('Adding ...');
         navigate('/cart');
       })
@@ -77,6 +79,7 @@ const CategoryPage = () => {
     const productDetails = {
       userId: userId,
       productId: product._id,
+      sellerId:product.sellerId,
       productName: product.Productname,
       productPrice: product.Productprice,
       productQuantity: product.Quantity,

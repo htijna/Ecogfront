@@ -105,6 +105,7 @@ const Footer = () => {
       <div className="footer-bottom">
         <p>&copy; 2024 Eco-G Organic Products. All rights reserved.</p>
       </div>
+      
     </footer>
        
     
