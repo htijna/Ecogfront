@@ -54,7 +54,7 @@ const Login = () => {
                 <img src={require('../../../imgs/ecog.png')} alt="Logo" />
               </a>
             </div>
-            <h2>Welcome Back! 👋🏻</h2>
+            <h2>Welcome Back! </h2>
             <p>Enter your credentials to access your account.</p>
 
             <div className="userinput-container">
@@ -81,13 +81,7 @@ const Login = () => {
                 />
               </div>
             </div>
-            <div className="userremember-forgot">
-              <div className="userremember-me">
-                <input type="checkbox" defaultValue="remember-me" id="remember-me" />
-                <label htmlFor="remember-me">Remember me</label>
-              </div>
-              <a href="#">Forgot password?</a>
-            </div>
+            <br></br>
             <button className="userlogin-btn" onClick={handleLogin} disabled={loading}>
               {loading ? 'Logging In...' : 'Log In'}
             </button>

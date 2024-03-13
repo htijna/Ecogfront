@@ -6,6 +6,7 @@ import './addproduct.scss';
 import { useNavigate } from 'react-router-dom';
 import baseUrl from '../../../Api';
 import Sellernavbar from '../Sellerhome/Sellernavbar';
+import Footer from '../../Userside/Userfooter/Footer';
 
 const Addproduct = (props) => {
   const [category, setCategory] = useState([]);
@@ -241,7 +242,7 @@ const Addproduct = (props) => {
             </div>
           </div>
         </div>
-      </div>
+      </div><Footer/>
     </div>
   );
 };

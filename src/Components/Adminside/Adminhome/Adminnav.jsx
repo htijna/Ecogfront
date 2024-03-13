@@ -1,32 +1,22 @@
 import React, { useState } from 'react'
-import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import StorefrontIcon from '@mui/icons-material/Storefront';
+
 import ecog from '../../../imgs/ecog.png';
 import CategoryIcon from '@mui/icons-material/Category';
-import HomeIcon from '@mui/icons-material/Home';
-import ContactSupportIcon from '@mui/icons-material/ContactSupport';
+
 import SearchIcon from '@mui/icons-material/Search';
 import MenuIcon from '@mui/icons-material/Menu';
-import axios from 'axios';
-import baseUrl from '../../../Api';
-import DashboardIcon from '@mui/icons-material/Dashboard';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
+
+
 import StoreIcon from '@mui/icons-material/Store';
-import CreditCardIcon from '@mui/icons-material/CreditCard';
-import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+
 import AssessmentIcon from '@mui/icons-material/Assessment';
-import NotificationsNoneIcon from '@mui/icons-material/NotificationsNone';
-import SystemSecurityUpdateGoodIcon from '@mui/icons-material/SystemSecurityUpdateGood';
+
 import TimelineIcon from '@mui/icons-material/Timeline';
-import SettingsOutlinedIcon from '@mui/icons-material/SettingsOutlined';
-import AccountCircleOutlinedIcon from '@mui/icons-material/AccountCircleOutlined';
-import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 
+import './Adminnav.scss'
 
-import AddBusinessIcon from '@mui/icons-material/AddBusiness';
-import PreviewIcon from '@mui/icons-material/Preview';
 import { Link, useNavigate } from 'react-router-dom';
-import { LuView } from "react-icons/lu";
+import ecoglogo from './Eco - G (7).png';
 import { TbCategoryPlus } from "react-icons/tb";
 
 const Adminnav = () => {
@@ -47,8 +37,9 @@ const Adminnav = () => {
     <div>
     <nav className="hnavbar">
       <div className="hlogo">
-        <a href="#"><img src={ecog} className='hpi' alt="Your SVG" /></a>
+        <img src={ecog} className='hpi' alt="Your SVG" />
       </div>
+      <img src={ecoglogo} className='adminlogo' alt="Your SVG" />
       <div className="hmenu">
         <div className="hmenu-links">
           <div className="husernavContainer">

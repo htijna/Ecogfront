@@ -1,10 +1,11 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import baseUrl from '../../../Api';
-
+import './product.scss'
 import { Box, Button, TextField, CircularProgress } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { Buffer } from 'buffer';
+import Footer from '../../Userside/Userfooter/Footer';
 
 const Productedit = (props) => {
   const [inputs, setInputs] = useState(props.data);
@@ -64,17 +65,22 @@ const Productedit = (props) => {
   }, []);
 
   return (
+    <div>
     <div className='new'>
       <div className='newContainer'>
-        <div className='top'>
-          <h1>Edit</h1>
+        <div className='top3'>
+          <h1 className='tophead'>Product Edit</h1>
         </div>
         <div className='bottom'>
           <div className='left'>
             {selectedImage ? (
               <img src={URL.createObjectURL(selectedImage)} alt='Selected' className='imgupload' />
             ) : (
-              <img src={`data:image/jpeg;base64,${Buffer.from(inputs.Photo.data)}`} className='imgpro' alt='Error' />
+              <img
+              src={selectedImage ? URL.createObjectURL(selectedImage) : `data:image/jpeg;base64,${Buffer.from(inputs.Photo.data).toString('base64')}`}
+              alt="Product"
+              className="imgupload"
+            />
             )}
           </div>
           <div className='right'>
@@ -82,7 +88,7 @@ const Productedit = (props) => {
               <Box
                 component='form'
                 sx={{
-                  '& .MuiTextField-root': { m: 1.6, width: '29ch' },
+                  '& .MuiTextField-root': { m: 1.6, width: '30ch' },
                 }}
                 noValidate
                 autoComplete='off'
@@ -101,14 +107,15 @@ const Productedit = (props) => {
                   <br /> &nbsp;&nbsp;&nbsp;Category:
                   <br /> &nbsp;&nbsp;&nbsp;
                   <select className='boxcategory' name='Cid' value={inputs.Cid} onChange={inputHandler}>
-                    {category.map((value, index) => {
-                      return (
-                        <option key={index} value={value._id}>
-                          {value.Categoryname}
-                        </option>
-                      );
-                    })}
-                  </select>
+  {category.map((value, index) => {
+    return (
+      <option key={index} value={value._id}>
+        {value.Categoryname}
+      </option>
+    );
+  })}
+</select>
+
                   <br />
                   <br></br> &nbsp;&nbsp;&nbsp;Price:
                   <br />
@@ -135,6 +142,7 @@ const Productedit = (props) => {
                   <textarea
                     id='Description'
                     label='Three ore four word'
+                    className='boxcategory'
                     type='text'
                     name='Description'
                     rows='3'
@@ -171,6 +179,8 @@ const Productedit = (props) => {
           </div>
         </div>
       </div>
+    </div>
+
     </div>
   );
 };

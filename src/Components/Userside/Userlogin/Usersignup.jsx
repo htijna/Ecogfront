@@ -70,7 +70,7 @@ const Usersignup = () => {
               <img src={require('../image/ecog.png')} alt="Logo" />
             
           </div> */}
-          <h2>Hey User 👋🏻</h2>
+          <h2>Hey User </h2>
           <p>Enter your credentials to access your account.</p>
           <div className="usersignuppinput-container">
             <div className="usersignuppform-group">
@@ -92,7 +92,7 @@ const Usersignup = () => {
               <input type="tel" name='phone' id="phone" autoComplete="off" value={formData.phone} onChange={handleChange} />
             </div>
              <div className="usersignuppform-group">
-              <label htmlFor="address" >Address</label>
+              <label htmlFor="address" >Shipping Address</label>
               <textarea  id="address" name='address' rows={3} autoComplete="off" value={formData.address} onChange={handleChange} />
             </div>
 

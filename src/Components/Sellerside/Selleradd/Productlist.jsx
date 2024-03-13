@@ -5,16 +5,21 @@ import './productlist.scss'
 
 import Sellernavbar from '../Sellerhome/Sellernavbar'
 import Productview from './Productview'
+import Footer from '../../Userside/Userfooter/Footer'
 
 const Productlist = () => {
   return (
+    <div>
     <div className='list'>
      
       <div className="listContainer">
         <Sellernavbar/>
-        <h2 className='viewh2'>Product View</h2><br></br>
+        
         <Productview/>
+
       </div>
+    </div><br></br><br></br><br></br><br></br><br></br><br></br>
+    <Footer/>
     </div>
   )
 }

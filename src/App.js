@@ -34,6 +34,7 @@ import Orderview from './Components/Userside/Userhome/Orderview';
 import Usersentry from './Components/Adminside/Adminadd/Usersentry';
 import Sellerentry from './Components/Adminside/Adminadd/Sellerentry';
 import Userprofile from './Components/Userside/Userhome/Userprofile';
+import Userprofileedit from './Components/Userside/Userhome/Userprofileedit';
 
 function App() {
   const sellerId = localStorage.getItem('sellerId');
@@ -54,7 +55,8 @@ function App() {
           <Route path='/category/:category' element={ <CategoryPage />} />
           <Route path='/order' element={ <Orderview /> } />
 
-          <Route path='/uprofile/:id' element={<Userprofile method='get' />} />
+          <Route path='/userprofile' element={<Userprofile method='get' />} />
+          <Route path='/uedit' element={ <Userprofileedit /> } />
           
 
           

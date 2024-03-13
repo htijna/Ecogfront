@@ -116,6 +116,7 @@ body {
   width: 3rem;
   height: 3rem;
   margin-bottom: 2.2rem;
+  top: 100px;
 }
 
 .userform-wrapper > h2 {
@@ -224,7 +225,7 @@ input[type="checkbox"]:checked::before {
   justify-content: center;
   align-items: center;
   gap: 0.6rem;
-
+background-color: #b44074;
   font-weight: 500;
   padding: 0.5rem 0;
   border-radius: 0.5rem;

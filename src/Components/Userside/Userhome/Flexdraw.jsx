@@ -3,16 +3,18 @@ import { Link, useNavigate} from 'react-router-dom';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
 import StorefrontIcon from '@mui/icons-material/Storefront';
 import ecog from '../../../imgs/ecog.png';
+import ecoglogo from '../Userimg/Eco - G (7).png';
 import CategoryIcon from '@mui/icons-material/Category';
 import HomeIcon from '@mui/icons-material/Home';
 import ContactSupportIcon from '@mui/icons-material/ContactSupport';
 import SearchIcon from '@mui/icons-material/Search';
-import MenuIcon from '@mui/icons-material/Menu';
+
 import './flexdraw.scss';
 import KeyboardArrowDownIcon from '@mui/icons-material/KeyboardArrowDown';
 import axios from 'axios';
 import baseUrl from '../../../Api';
 import LocalShippingIcon from '@mui/icons-material/LocalShipping';
+import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 const Flexdraw = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -51,11 +53,13 @@ const Flexdraw = () => {
   return (
     <div>
       <nav className="hnavbar">
-        <div className="hlogo"> <Link  to="/uprofile/:id" style={{ textDecoration: "none" }}>
+        <div className="hlogo"> 
             
-            
-          <img src={ecog} className='hpi' alt="Your SVG" /></Link>
+          <img src={ecog} className='hpi' alt="Your SVG" />
+        
+          
         </div>
+        <img src={ecoglogo} className='hpia' alt="Your SVG" />
         <div className="hmenu">
           <div className="hmenu-links">
             <div className="husernavContainer">
@@ -104,13 +108,17 @@ const Flexdraw = () => {
             <Link to="/about"> 
               <p className='hhicon'><ContactSupportIcon />About Us</p>
             </Link>
+            
           </div> 
           <Link  to="/" style={{ textDecoration: "none" }}>
             <button onClick={handleLogout} className="hreg-in">Log out</button>
           </Link>
+          <Link  to="/userprofile" style={{ textDecoration: "none" }}>
+          <p className='profileicon'> <AccountCircleIcon />  </p>
+             </Link>
         </div>
         <div className="hmenu-btn">
-          <MenuIcon />
+       
         </div>
       </nav>
     </div>

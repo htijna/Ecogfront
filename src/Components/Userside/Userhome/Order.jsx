@@ -38,7 +38,6 @@ const Order = () => {
       console.log('Sending order to seller:', item);
       alert('Order placed successfully!');
       setSelectedOrder(null); // Emptying the selected order
-      
     } catch (error) {
       console.error('Error sending order to seller:', error);
     }
@@ -112,7 +111,7 @@ const Order = () => {
         </div>
       ) : (
         <p className='nocart'>No items in the orders...!
-         <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> <br></br> 
+         <br></br> <br></br> <br></br> 
         
         </p>
         
@@ -121,9 +120,9 @@ const Order = () => {
       <div className="homefooterbottom">
       
       </div>
-      <div><Footer />
-      
-      </div>
+      <div>
+      <br></br> <br></br> 
+      </div><Footer />
      
     </div>
   );

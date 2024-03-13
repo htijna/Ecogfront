@@ -13,33 +13,24 @@ const Productview = () => {
   const [product, setProduct] = useState([]);
   const [selected, setSelected] = useState();
   const [update, setUpdate] = useState(false);
-  const Productview = () => {
-    const [product, setProduct] = useState([]);
-    const [selected, setSelected] = useState();
-    const [update, setUpdate] = useState(false);
-  
-    useEffect(() => {
-      const sellerId = localStorage.getItem('sellerId');
-      const fetchProducts = async () => {
-        try {
-          const response = await axios.get(baseUrl + '/product/productview', { headers: { sellerId } });
+
+  useEffect(() => {
+    const sellerId = localStorage.getItem('sellerId');
+    if (sellerId) {
+      axios.get(`${baseUrl}/product/productview?sellerId=${sellerId}`)
+        .then(response => {
           setProduct(response.data);
-        } catch (error) {
-          console.error('Error fetching products:', error);
-          // Handle error gracefully, e.g., display a message to the user
-        }
-      };
-    
-      if (sellerId) {
-        fetchProducts();
-      } else {
-        console.error('Seller ID not found in localStorage');
-        // Handle the case where sellerId is not found in localStorage
-      }
-    }, []); // Empty dependency array to run the effect only once on component mount
-    
-  }
-  
+        })
+        .catch(err => {
+          if (err.response && err.response.status === 404) {
+            console.log('No products found for this seller');
+          } else {
+            console.error(err);
+          }
+        });
+    }
+  }, []);
+
   const deletevalues =(id)=>{
     console.log("Inactive",id)
     axios.put(baseUrl + "/product/delete/"+id)
@@ -79,17 +70,17 @@ const activevalues =(id)=>{
   
   var result=
     <div className='bb'>
-      
+      <div className='top1'>
+       <h1 className='tophead'>Product view</h1></div>
       <TableContainer>
         <Table>
           <TableHead>
-            <TableRow>
+            <TableRow> <TableCell>Image</TableCell>
               <TableCell>ProductName</TableCell>
               <TableCell>Price</TableCell>
               <TableCell>Quantity</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Category</TableCell>
-              <TableCell>Image</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Edit</TableCell>
               <TableCell>Active</TableCell>
@@ -100,13 +91,21 @@ const activevalues =(id)=>{
             {product.map((value, index) => {
               return (
                 <TableRow key={index}>
+                  <TableCell>
+                    {value.Photo ? (
+                      <img src={`data:${value.Photo.contentType};base64,${Buffer.from(value.Photo.data).toString('base64')}`} className='imgpro' alt='Product' />
+                    ) : (
+                      <span>No Image</span>
+                    )}
+                  </TableCell>
                   <TableCell>{value.Productname}</TableCell>
                   <TableCell>{value.Productprice}</TableCell>
                   <TableCell>{value.Quantity}</TableCell>
                   <TableCell>{value.Description}</TableCell>
-                  <TableCell>{value.prod[0].Categoryname}</TableCell>
-                  <TableCell>
-                     <img src={`data:image/jpeg;base64,${Buffer.from(value.Photo.data)}`} className='imgpro' alt='Error' />  </TableCell>
+                  <TableCell>{value.Cid?.Categoryname || 'No Category'}</TableCell> 
+
+
+                  
                   <TableCell>{value.Status}</TableCell>
                   <TableCell><ModeEditOutlineIcon color='success' onClick={() => updatevalues(value)} /></TableCell>
                   <TableCell><ToggleOnIcon color='primary' onClick={() => activevalues(value._id)} /></TableCell>

@@ -5,6 +5,7 @@ import { Button } from '@mui/material'
 import { Link, useNavigate } from 'react-router-dom'
 import './recentlyadd.scss'
 import Sellernavbar from '../Sellerhome/Sellernavbar'
+import Footer from '../../Userside/Userfooter/Footer'
 const Recentlyadd = () => {
   const navigate = useNavigate();
 
@@ -20,6 +21,8 @@ const Recentlyadd = () => {
   // }, []); // Empty dependency array means this effect runs once when the component mounts
 
   return (
+<div>
+
    <div className='addprodnew'>
     
       <div className="addprodnewContainer">
@@ -31,7 +34,9 @@ const Recentlyadd = () => {
           <Productview/>
           
       </div>
-    </div></div>
+    </div></div><br></br>
+<Footer/>
+    </div>
   )
 }
 

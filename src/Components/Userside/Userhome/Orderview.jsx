@@ -8,6 +8,7 @@ import Footer from '../Userfooter/Footer';
 
 const Orderview = () => {
   const [orders, setOrders] = useState([]);
+  const [deliveredLoading, setDeliveredLoading] = useState(false);
 
   useEffect(() => {
     fetchOrders(); // Fetch orders once on component mount
@@ -26,7 +27,30 @@ const Orderview = () => {
       console.error('userID not found in localStorage');
     }
   };
+
+  const markAsDelivered = async (orderId) => {
+    try {
+      await axios.put(baseUrl + `/sellerview/markasdelivered/${orderId}`);
+      fetchOrders(); // Refetch orders after marking as delivered
+    } catch (error) {
+      console.error('Error marking order as delivered:', error);
+    }
+  };
   
+
+  const markAsCompleted = async (orderId) => {
+    try {
+      await axios.put(baseUrl + `/sellerview/markascompleted/${orderId}`);
+      fetchOrders(); // Refetch orders after marking as delivered
+    } catch (error) {
+      console.error('Error marking order as delivered:', error);
+    }
+  };
+
+  const formatOrderDate = (date) => {
+    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
+  };
+
 
   return (
     <div className="midall">
@@ -46,6 +70,7 @@ const Orderview = () => {
                 <th>Description</th>
                 <th>Status</th>
                 <th>Date</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -60,7 +85,18 @@ const Orderview = () => {
                   <td>{item.productQuantity}</td>
                   <td>{item.productDescription}</td>
                   <td>{item.status}</td>
-                  <td>{item.orderDate}</td>
+                  <td>{formatOrderDate(item.orderDate)}</td> 
+                  <td>
+                  {deliveredLoading && <span>Pending...</span>}
+                      {item.status === 'Shipped' && (
+                      <button onClick={() => markAsDelivered(item._id)}  className='buttonseller3' >Delivered</button>
+                    )}
+                    
+                    &nbsp;&nbsp;&nbsp;&nbsp;
+                    {item.status === 'Delivered' && (
+                      <button onClick={() => markAsCompleted(item._id)}  className='buttonseller4' >Completed</button>
+                    )}
+                    </td>
                 </tr>
               ))}
             </tbody>

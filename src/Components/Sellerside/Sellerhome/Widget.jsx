@@ -1,80 +1,79 @@
-import React from 'react'
-import "./widget.scss"
+import React, { useEffect, useState } from 'react';
+import "./widget.scss";
 import KeyboardArrowUpIcon from '@mui/icons-material/KeyboardArrowUp';
-import PersonOutlineOutlinedIcon from '@mui/icons-material/PersonOutlineOutlined';
 import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
-import MonetizationOnOutlinedIcon from '@mui/icons-material/MonetizationOnOutlined';
-import AccountBalanceWalletOutlinedIcon from '@mui/icons-material/AccountBalanceWalletOutlined';
-const Widget = ({ type }) => {
-let data;
+import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import { Link } from 'react-router-dom';
+import baseUrl from '../../../Api';
+import axios from 'axios';
 
-//temporary
-const amount = 0;
-const diff = 0; 
+const Widget = () => {
+  const [orders, setOrders] = useState([]); 
+  const [products, setProducts] = useState([]);
+  
+  useEffect(() => {
+    fetchOrders();
+    fetchProducts();
+  }, []);
 
-switch(type){
-    case "user":
-        data={
-            title:"USERS",
-            isMoney: false,
-            link: "See all users",
-            icon:<PersonOutlineOutlinedIcon className='icon' style={{color: "crimson",backgroundColor:"rgba(255,0,0,0.2"}}/>,
-           };
-        break;
+  const fetchOrders = async () => {
+    const sellerId = localStorage.getItem('sellerId');
+    if (sellerId) {
+      try {
+        const response = await axios.get(`${baseUrl}/sellerview/sellervieworder?sellerId=${sellerId}`);
+        setOrders(response.data);
+      } catch (error) {
+        console.error('Error fetching orders:', error);
+      }
+    } else {
+      console.error('Seller ID not found in localStorage');
+    }
+  };
+  
+  const fetchProducts = async () => {
+    const sellerId = localStorage.getItem('sellerId');
+    if (sellerId) {
+      try {
+        const response = await axios.get(`${baseUrl}/product/productview?sellerId=${sellerId}`);
+        setProducts(response.data);
+      } catch (error) {
+        console.error('Error fetching products:', error);
+      }
+    } else {
+      console.error('Seller ID not found in localStorage');
+    }
+  };
 
-        case "order":
-            data={
-                title:"Products",
-                isMoney: false,
-                link: "view all Products",
-                icon:<ShoppingCartOutlinedIcon className='icon' style={{color: "goldenrod",backgroundColor:"rgba(218,165,32,0.2"}}/>,
-                
-            };
-            break;
-
-            case "earning":
-                data={
-                    title:"EARNING",
-                    isMoney: true,
-                    link: "view net earning",
-                    icon:<MonetizationOnOutlinedIcon className='icon' style={{color: "green", backgroundColor: "rgba(0,128,0,0.2)"}} />
-                    ,
-                    
-                };
-                break;
-
-                case "balance":
-                    data={
-                        title:"BALANCE",
-                        isMoney: true,
-                        link: "See details",
-                        icon:<AccountBalanceWalletOutlinedIcon className='icon'  style={{color: "purple",backgroundColor:"rgba(128,0,128,0.2"}}/>,
-                        
-                    };
-                    break;
-
-
-        default:
-            break;
-}
-
+  const totalProducts = products.length;
+  const totalOrders = orders.length;
 
   return (
-    <div className='widget'>
-      <div className="left">
-        <span className="title">{data.title}</span>
-        <span className="counter">{data.isMoney && "₹"} {amount}</span>
-        <span className="link">{data.link}</span>
+    <div>
+      <div className='widget'>
+        <div className="widgetleft">
+          <span className="title">Product</span>
+          <span className="counter">Total Products: {totalProducts}</span>
+          <span className="link"><Link to="/productlist">View All Products<KeyboardArrowUpIcon /></Link></span>
+        </div>
+        <div className="widgetright">
+          <ShoppingCartOutlinedIcon className='icon34'/>
+        </div>
       </div>
-      <div className="right">
-        <div className="percentage positive">
-            <KeyboardArrowUpIcon />
-            {diff} %
-            </div>
-      {data.icon}
+
+      <br />
+
+      <div className='widget'>
+        <div className="widgetleft">
+          <span className="title">Orders</span>
+          <span className="counter">Total Orders: {totalOrders}</span>
+          <span className="link"><Link to='/sellerorder'>View All Orders<KeyboardArrowUpIcon /></Link></span>
+        </div>
+        <div className="widgetright">
+          <CurrencyRupeeIcon className='icon44' />
+        </div>
+      </div>
     </div>
-    </div>
-  )
+  );
 }
 
-export default Widget
+export default Widget;

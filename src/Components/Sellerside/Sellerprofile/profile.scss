@@ -1,6 +1,8 @@
 .single{
     display: flex;
     width:100%;
+   
+    
 
     .singleContainer{
         flex: 6;
@@ -11,11 +13,13 @@
             gap: 20px;
 
             .left{
-                flex: 1;
+                flex: 2.5;
                 -webkit-box-shadow: 2px 4px 10px 1px rgba(0,0,0,0.47);
                 box-shadow: 2px 4px 10px 1px rgba(201,201,201,0.47);
                 padding: 20px;
                 position: relative;
+                border-radius: 10px;
+                
 
                 .editbutton{
                     position: absolute;
@@ -43,11 +47,13 @@
                         .itemTitle{
                             margin-bottom: 10px;
                             color: grey;
+                            
 
                         }
                         .detailItem{
                             margin-bottom: 10px;
                             font-size: 14px;
+                           
 
                             .itemKey{
                                 font-weight: bold;
@@ -65,7 +71,7 @@
             }
 
             .right{
-                flex: 2;
+                flex: 1;
             }
         }
 
@@ -89,3 +95,30 @@
 }
 
 }
+.imgprofiles{
+    height: 150px;
+    width: 150px;
+    margin-left: 350px;
+    margin-top: -200px;
+}
+.updatepro{
+    margin: 15px 15px 15px 15px;
+    text-align: center;
+    font-size: 12px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 732px;
+    
+    padding: 5px;
+}
+  
+  .updatepro:hover {
+    background-color: #136ab6;
+  }
+
+  .iccc{
+    color: rgb(64, 12, 12);
+  }

@@ -7,10 +7,15 @@ import baseUrl from '../../../Api';
 import moment from 'moment'; 
 import Sellernavbar from '../Sellerhome/Sellernavbar';
 import './product.scss'
+import Footer from '../../Userside/Userfooter/Footer';
 
 const Incomingorder = () => {
   const { productId } = useParams(); 
   const [orders, setOrders] = useState([]); 
+
+  const [acceptLoading, setAcceptLoading] = useState(false);
+  const [shipLoading, setShipLoading] = useState(false);
+  const [completeLoading, setCompleteLoading] = useState(false);
 
   useEffect(() => {
     fetchOrders();
@@ -51,16 +56,21 @@ const Incomingorder = () => {
     }
   };
 
-  const markAsDelivered = async (orderId) => {
+  const markAsCompleted = async (orderId) => {
     try {
-      await axios.put(baseUrl + `/sellerview/markasdelivered/${orderId}`);
+      await axios.put(baseUrl + `/sellerview/markascompleted/${orderId}`);
       fetchOrders(); // Refetch orders after marking as delivered
     } catch (error) {
       console.error('Error marking order as delivered:', error);
     }
   };
 
+  const formatOrderDate = (timestamp) => {
+    return moment(timestamp).format('MMMM Do YYYY, h:mm:ss a');
+  };
+
   return (
+  <div>
     <div className="midall">
       <Sellernavbar/>
       <br />
@@ -72,37 +82,49 @@ const Incomingorder = () => {
           <table>
             <thead>
               <tr>
-                <th>Product Id</th>
+                {/* <th>Product Id</th> */}
+                <th>User Name</th>
                 <th>Product Name</th>
                 <th>Price</th>
                 <th>Quantity</th>
                 <th>Description</th>
                 <th>Status</th>
                 <th>Date</th>
+                <th>User Address</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.productId}</td>
+                  {/* <td>{item.productId}</td> */}
+                  <td>{item.user.name}</td>
                   <td>{item.productName}</td>
                   <td>{item.productPrice}</td>
                   <td>{item.productQuantity}</td>
                   <td>{item.productDescription}</td>
                   <td>{item.status}</td>
-                  <td>{item.orderDate}</td> 
+                  <td>{formatOrderDate(item.orderDate)}</td> 
+                  <td>{item.user.address}</td> 
                   <td>
-                    {item.status !== 'Accepted' && (
+
+
+{acceptLoading && <span>Pending...</span>}
+                    {!acceptLoading && item.status !== 'Accepted' && item.status !== 'Shipped' && item.status !== 'Delivered' && (
                       <button onClick={() => acceptOrder(item._id)} className='buttonseller1' >Accept</button>
                     )}
-                    &nbsp;&nbsp;&nbsp;&nbsp;
-                    {item.status === 'Accepted' && (
+
+{shipLoading && <span>Pending...</span>}
+                    {!shipLoading && item.status === 'Accepted' && (
                       <button onClick={() => markAsShipped(item._id)}  className='buttonseller2' >Shipped</button>
                     )}
+
+
+
+{completeLoading && <span>Pending...</span>}
                     &nbsp;&nbsp;&nbsp;&nbsp;
-                    {item.status === 'Shipped' && (
-                      <button onClick={() => markAsDelivered(item._id)}  className='buttonseller3' >Delivered</button>
+                    {item.status === 'Delivered' && (
+                      <button onClick={() => markAsCompleted(item._id)}  className='buttonseller4' >Completed</button>
                     )}
                   </td>
                 </tr>
@@ -111,6 +133,14 @@ const Incomingorder = () => {
           </table>
         </div>
       )}
+    </div>
+   
+    <br></br><br></br><br></br>
+    <div className="bottom">
+          
+          </div><br></br>
+    
+<Footer/>
     </div>
   );
 };

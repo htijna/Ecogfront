@@ -125,13 +125,22 @@ section > h1 {
   }
 }
 .hpi{
-    margin-left: -10px;
-    margin-top: -35px;
+    margin-left: -20px;
+    margin-top: -2px;
   display: flex;
   width: 60px;
   align-content: last baseline;
   max-height: 10;
   
+
+}
+.hpia{
+  margin-left: -24px;
+  margin-top: -2px;
+display: flex;
+width: 60px;
+height: 60px;
+align-content: last baseline;
 
 }
 .hdropbox{
@@ -206,7 +215,7 @@ button {
 
 .husernavContainer {
  height: 50px;
-  padding: 10px 20px;
+  padding: 10px 0px;
   display: flex;
   justify-content: space-between;
   margin-top: 0px;
@@ -221,14 +230,14 @@ button {
 
 .husersearchInput {
   padding: 10px;
-  width: 200px;
+  width: 180px;
   background-color: rgb(123, 200, 123); 
   border-radius: 30px 0px 0px 30px  ;
   
 }
 
 .husersearchButton {
-  padding: 6px 16px;
+  padding: 6px 6px;
   background-color: #000100a8;
   color: #dadada;
   border: none;
@@ -236,6 +245,8 @@ button {
   margin-right: 40px;
   border-radius: 0px 30px 30px 0px ;
 }
-// .hhicon{
-//   top:150px
-// } 
+.profileicon{
+  font-size: 62px;
+  size: 330x;
+  
+}

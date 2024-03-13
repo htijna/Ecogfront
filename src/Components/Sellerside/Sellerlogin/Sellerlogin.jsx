@@ -36,16 +36,16 @@ const Sellerlogin = () => {
       <div className="sellercontainer">
         <div className="sellerimage-section">
           <div className="sellerimage-wrapper">
-            <img src={require('./Seller.jpg')} alt="not found" />
+            <img src={require('./seller3.jpg')} alt="not found" />
           </div>
           <div className="sellercontent-container">
             <h1 className="sellersection-heading">THE BEST MARKETING OF ALL IS <span>HAPPY CLIENTS..</span></h1>
-            <p className="sellersection-paragraph">Eat well Feel good.</p>
+            
           </div>
         </div>
         <div className="sellerform-section">
           <div className="sellerform-wrapper">
-            <h2>Welcome Sellers! 👋🏻</h2>
+            <h2>Welcome Sellers! </h2>
             <p>Enter your credentials to access your account.</p>
             <div className="sellerinput-container">
               {errorMessage && <p className="error-message">{errorMessage}</p>}
@@ -60,13 +60,7 @@ const Sellerlogin = () => {
                   value={password} onChange={(e) => setPassword(e.target.value)} />
               </div>
             </div>
-            <div className="sellerremember-forgot">
-              <div className="sellerremember-me">
-                <input type="checkbox" defaultValue="remember-me" id="remember-me" />
-                <label htmlFor="remember-me">Remember me</label>
-              </div>
-              <a href="#">Forgot password?</a>
-            </div>
+            <br></br>
             <button className="sellerlogin-btn" onClick={handleLogin}>Log In</button>
             <div className="selleror-divider">or</div>
             <div className='sellersign'>

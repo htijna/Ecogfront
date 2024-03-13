@@ -48,6 +48,7 @@ const Sellersignup = () => {
     }
   };
   return (
+    <div><br></br>
     <div className='sellersignupppostion'>
       
     <div className="sellersignuppcontainer">
@@ -65,13 +66,13 @@ const Sellersignup = () => {
             </a>
           </div> */}
          
-          <h2>Hey Seller 👋🏻   </h2>      
-          <p>Enter your credentials to access your account.</p>
+          <h2>Hey Seller   </h2>      
+          <p>Join the Green Revolution: Become an Ecog Seller Today!.</p>
           <div className="sellersignuppinput-container">
           {successMessage && <p className="success-message">{successMessage}</p>}
             {errorMessage && <p className="error-message">{errorMessage}</p>}
             <div className="sellersignuppform-group">
-              <label htmlFor="name">Name</label>
+              <label htmlFor="name">Business Name</label>
               <input type="text" name='name' id="name" autoComplete="off" value={formData.name} onChange={handleChange} />
             </div>
              <div className="sellersignuppform-group">
@@ -103,7 +104,7 @@ const Sellersignup = () => {
         </div>
       </div>
     </div>
-  </div>
+  </div></div>
   )
 }
   

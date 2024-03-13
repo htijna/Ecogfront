@@ -152,7 +152,7 @@ const Cart = () => {
       <button className="proceed-button" onClick={sendToSellerProfile}>
         Proceed to Order
       </button>
-      <br></br> <br></br> <br></br> 
+      <br></br> <br></br> <br></br> <br></br>
       <div className="homefooterbottom"></div>
       <div>
         <Footer />
