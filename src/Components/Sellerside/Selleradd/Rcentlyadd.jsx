@@ -27,14 +27,12 @@ const Recentlyadd = () => {
     
       <div className="addprodnewContainer">
         <Sellernavbar/>
-        <div className="addprodtop"> <Link to="/add" style={{textDecoration:"none"}} className='addprodlink'>
-           <Button className='buttadd'>Add products</Button></Link>
-        </div>
-        <div className="addprodbottom"><h2 className='rece'>Recently Added</h2><br></br>
+       
+        
           <Productview/>
           
-      </div>
-    </div></div><br></br>
+      
+    </div></div><br></br><br></br><br></br><br></br>
 <Footer/>
     </div>
   )

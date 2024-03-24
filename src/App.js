@@ -35,6 +35,8 @@ import Usersentry from './Components/Adminside/Adminadd/Usersentry';
 import Sellerentry from './Components/Adminside/Adminadd/Sellerentry';
 import Userprofile from './Components/Userside/Userhome/Userprofile';
 import Userprofileedit from './Components/Userside/Userhome/Userprofileedit';
+import Productedit from './Components/Sellerside/Selleradd/Productedit';
+import Selleredit from './Components/Sellerside/Sellerprofile/Selleredit';
 
 function App() {
   const sellerId = localStorage.getItem('sellerId');
@@ -56,7 +58,7 @@ function App() {
           <Route path='/order' element={ <Orderview /> } />
 
           <Route path='/userprofile' element={<Userprofile method='get' />} />
-          <Route path='/uedit' element={ <Userprofileedit /> } />
+          <Route path='/uedit' element={ <Userprofileedit method='put' /> } />
           
 
           
@@ -65,10 +67,13 @@ function App() {
           <Route path='/sellersignup' element={<Sellersignup />} />
           <Route path='/sellerlogin' element={<Sellerlogin />} />
           <Route path='/add' element={<Addproduct method='post' />} />
-          <Route path='/pview/:id' element={<Productview method='get' sellerId={sellerId} />} />
+          <Route path='/pview' element={<Productview method='get' sellerId={sellerId} />} />
           <Route path='/productlist' element={<Productlist method='get'/>} />
           <Route path='/products' element={<Recentlyadd />} />
           <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/pedit/:id" element={<Productedit method='post' />} />
+          <Route path='/sedit' element={ <Selleredit method='put' /> } />
+
           <Route path='/sellerorder' element={<Incomingorder />} />
 
           {/* Admin */}

@@ -9,8 +9,6 @@ import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
 import HeadphonesOutlinedIcon from '@mui/icons-material/HeadphonesOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
 import WatchLaterOutlinedIcon from '@mui/icons-material/WatchLaterOutlined';
-import appStore from '../../../imgs/app-store.jpg'
-import googlePlay from '../../../imgs/google-play.jpg'
 import { Link } from 'react-router-dom';
 import SupportAgentIcon from '@mui/icons-material/SupportAgent';
 const Footer = () => {

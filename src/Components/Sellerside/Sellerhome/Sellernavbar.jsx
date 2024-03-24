@@ -115,7 +115,7 @@ const Sellernavbar = ({id}) => {
 
 
 
-          <Link to="/products" style={{ textDecoration: "none" }}>
+          <Link to="/add" style={{ textDecoration: "none" }}>
             <p className='hhicon'><AddBusinessIcon  />Add Product</p>
           </Link>
           <Link to="/productlist">

@@ -1,11 +1,52 @@
-.newsLetterSection{width: 100%; height: auto;}
-.newsLetterSection .box{background: url(../../../imgs/bg.png); width: 100%; height: 370px;margin-bottom: 10px;
-     padding: 60px 80px; border-radius: 30px; overflow: hidden;}
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700;900&display=swap");
 
-.newsLetterSection .box .info{width: 60%;}
-.newsLetterSection .box .info h2{font-size: 40px; font-weight: 600; line-height: 35px; opacity: 0.8;color: rgb(41, 39, 39);}
-.newsLetterSection .box .info p{font-size: 17px; opacity: 0.8;color: black;}
-.newsLetterSection .box .img{width: 45%;}
-.newsLetterSection .box .img img{position: relative; top: 60px;  
-margin-right: 100px;}
-.newsLetterSection .box  .newsLetterBanner{position: relative !important; left: 0px !important; bottom: inherit !important;}
+.newsLetterSection
+{
+     width: 100%;
+      height: auto;
+     }
+
+.newsLetterSection .box{background: url(../../../imgs/bg.png); width: 100%; height: 370px;margin-bottom: 10px;
+     padding: 60px 50px; border-radius: 2dvh; overflow: hidden;}
+
+
+.wwww{
+     display: flex;
+     color: gray;
+     margin-left: -30;
+}
+
+
+
+
+
+
+.recentlybodyproduct{
+    padding-top: 15px; 
+    margin: 0px 0px 10px 0px;
+    font-family: Lato, sans-serif;
+     
+      height: auto;
+      display: flex;
+      justify-content: center;
+      // align-items: center;   
+}
+
+.recentlydescription {
+     font-size: 14px;
+     letter-spacing: 1px;
+     color: #5f0909;
+     text-transform: capitalize;
+     margin-bottom: 1rem;
+     
+   }
+   .recentlyquantity{
+    font-size: 15px;
+     letter-spacing: 1px;
+     color: #095f2e;
+     text-transform: capitalize;
+     
+   }
+   
+
+

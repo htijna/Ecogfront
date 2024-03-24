@@ -8,12 +8,13 @@ const Adminlogin = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleLogin = async () => {
             try {
        
-
+              setLoading(true); 
              const response = await axios.post(baseurl+'/adminAuth/admin', {
           username,
           password,
@@ -21,7 +22,7 @@ const Adminlogin = () => {
                 
           
                 if (response.data.success) {
-                  alert('Login successful');
+                 
                   console.log(response.data);
                   navigate('/userlog');
                 } 
@@ -32,6 +33,7 @@ const Adminlogin = () => {
                 }
               } catch (err) {
                 setError('Error occurred during login. Please try again.');
+                setLoading(false); // Set loading to false when error occurs
               }
   };
 
@@ -73,8 +75,8 @@ const Adminlogin = () => {
                 />
               </div>
             </div>
-            <button className="adminuserlogin-btn" onClick={handleLogin}>
-              Log In
+            <button className="adminuserlogin-btn" onClick={handleLogin} disabled={loading}>
+            {loading ? 'Logging In...' : 'Log In'}
             </button>
           </div>
         </div>

@@ -9,6 +9,7 @@ import baseUrl from '../../../Api';
 import {Buffer} from 'buffer';
 import './product.scss'
 import Productedit from './Productedit';
+import Sellernavbar from '../Sellerhome/Sellernavbar';
 const Productview = () => {
   const [product, setProduct] = useState([]);
   const [selected, setSelected] = useState();
@@ -69,6 +70,7 @@ const activevalues =(id)=>{
 
   
   var result=
+
     <div className='bb'>
       <div className='top1'>
        <h1 className='tophead'>Product view</h1></div>

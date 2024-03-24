@@ -61,9 +61,9 @@
 }
 
 .profile-name {
-  font-size: 22px;
+  font-size: 18px;
   font-weight: 900;
-//   margin-bottom: 2px;
+  // margin-bottom: 3px;
 }
 .price{
   font-size: 12px;
@@ -74,9 +74,17 @@
   margin-bottom: 2px;
 }
 .description {
-  font-size: 13px;
+  font-size: 12px;
   letter-spacing: 1px;
   color: #5f0909;
+  text-transform: capitalize;
+  margin-bottom: 1rem;
+  
+}
+.quantity{
+ font-size: 15px;
+  letter-spacing: 1px;
+  color: #095f2e;
   text-transform: capitalize;
   
 }

@@ -13,13 +13,13 @@ const Orderview = () => {
   useEffect(() => {
     fetchOrders(); // Fetch orders once on component mount
   }, []);
-   
+
   const fetchOrders = async () => {
     const userId = localStorage.getItem('userId');
     if (userId) {
       try {
         const response = await axios.get(`${baseUrl}/sellerview/myorder?userId=${userId}`);
-        setOrders(response.data);
+        setOrders(response.data); // Update orders state with fetched data
       } catch (error) {
         console.error('Error fetching orders:', error);
       }
@@ -36,21 +36,15 @@ const Orderview = () => {
       console.error('Error marking order as delivered:', error);
     }
   };
-  
 
   const markAsCompleted = async (orderId) => {
     try {
       await axios.put(baseUrl + `/sellerview/markascompleted/${orderId}`);
-      fetchOrders(); // Refetch orders after marking as delivered
+      fetchOrders(); // Refetch orders after marking as completed
     } catch (error) {
-      console.error('Error marking order as delivered:', error);
+      console.error('Error marking order as completed:', error);
     }
   };
-
-  const formatOrderDate = (date) => {
-    return moment(date).format('MMMM Do YYYY, h:mm:ss a');
-  };
-
 
   return (
     <div className="midall">
@@ -85,18 +79,18 @@ const Orderview = () => {
                   <td>{item.productQuantity}</td>
                   <td>{item.productDescription}</td>
                   <td>{item.status}</td>
-                  <td>{formatOrderDate(item.orderDate)}</td> 
+                  <td>{moment(item.orderDate).format('MMMM Do YYYY, h:mm:ss a')}</td>
+
                   <td>
-                  {deliveredLoading && <span>Pending...</span>}
-                      {item.status === 'Shipped' && (
-                      <button onClick={() => markAsDelivered(item._id)}  className='buttonseller3' >Delivered</button>
+                    {deliveredLoading && <span>Pending...</span>}
+                    {item.status === 'Shipped' && (
+                      <button onClick={() => markAsDelivered(item._id)} className='buttonseller3'>Delivered</button>
                     )}
-                    
                     &nbsp;&nbsp;&nbsp;&nbsp;
                     {item.status === 'Delivered' && (
-                      <button onClick={() => markAsCompleted(item._id)}  className='buttonseller4' >Completed</button>
+                      <button onClick={() => markAsCompleted(item._id)} className='buttonseller4'>Completed</button>
                     )}
-                    </td>
+                  </td>
                 </tr>
               ))}
             </tbody>

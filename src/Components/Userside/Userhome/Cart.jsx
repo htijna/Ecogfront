@@ -68,7 +68,7 @@ const Cart = () => {
         return prevOrders.map(order => {
           if (order._id === id) {
             // Increment the quantity of the specific item
-            return { ...order, productQuantity: order.productQuantity + 1 };
+            return { ...order, productQuantity: order.productQuantity + .5 };
           }
           return order;
         });
@@ -77,6 +77,7 @@ const Cart = () => {
       console.error('Error incrementing item quantity:', error);
     }
   };
+  
 
   const handleDecrement = async (id) => {
     try {
@@ -84,9 +85,9 @@ const Cart = () => {
       // After updating the quantity on the server, we need to update the local state
       setOrders(prevOrders => {
         return prevOrders.map(order => {
-          if (order._id === id && order.productQuantity > 1) {
+          if (order._id === id && order.productQuantity > .5) {
             // Decrement the quantity of the specific item, but ensure it doesn't go below 1
-            return { ...order, productQuantity: order.productQuantity - 1 };
+            return { ...order, productQuantity: order.productQuantity - .5 };
           }
           return order;
         });
@@ -95,6 +96,7 @@ const Cart = () => {
       console.error('Error decrementing item quantity:', error);
     }
   };
+  
 
   // Calculate total amount
   const totalAmount = orders.reduce((total, item) => total + (item.productPrice * item.productQuantity), 0);

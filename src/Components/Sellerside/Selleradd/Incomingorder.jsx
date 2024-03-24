@@ -65,9 +65,6 @@ const Incomingorder = () => {
     }
   };
 
-  const formatOrderDate = (timestamp) => {
-    return moment(timestamp).format('MMMM Do YYYY, h:mm:ss a');
-  };
 
   return (
   <div>
@@ -104,7 +101,7 @@ const Incomingorder = () => {
                   <td>{item.productQuantity}</td>
                   <td>{item.productDescription}</td>
                   <td>{item.status}</td>
-                  <td>{formatOrderDate(item.orderDate)}</td> 
+                  <td>{item.orderDate}</td> 
                   <td>{item.user.address}</td> 
                   <td>
 

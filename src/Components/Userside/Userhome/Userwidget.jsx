@@ -66,7 +66,7 @@ const Userwidget = () => {
                 <div className="widgetleft">
                     <span className="title">Orders</span>
                     <span className="counter">Total Orders: {totalOrders}</span>
-                    <span className="link"><Link to='/sellerorder'>My Orders<KeyboardArrowUpIcon /></Link></span>
+                    <span className="link"><Link to='/order'>My Orders<KeyboardArrowUpIcon /></Link></span>
                 </div>
                 <div className="widgetright">
                     <CurrencyRupeeIcon className='icon44' />

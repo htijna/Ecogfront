@@ -117,13 +117,14 @@ const CategoryPage = () => {
                   <div className="content">
                     <h2 className="profile-name">{value.Productname} <span className='dashline'>  &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp; </span>
                       <span className='price'>Price: {value.Productprice}</span> </h2>
+                     
                     <p className="quantity">
                       Quantity: {value.Quantity}&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;Category: {value.prod[0]?.Categoryname}
                     </p>
                     <p className='description'>
-                      Description :  {value.Description}
+                      Description :  {value.Description} 
                     </p>
-                  </div>
+                  </div><br></br>
                   <div className="cart">
                     <a className="favour">
                       <MdOutlineFavorite />

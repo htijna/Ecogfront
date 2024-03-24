@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import Flexdraw from './Flexdraw';
 import AddBoxIcon from '@mui/icons-material/AddBox';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
+
 const Order = () => {
   const [selectedOrder, setSelectedOrder] = useState(null);
   const [totalAmount, setTotalAmount] = useState(0);
@@ -34,8 +35,9 @@ const Order = () => {
     try {
       const currentDate = new Date().toISOString();
       const orderWithDate = { ...item, orderDate: currentDate };
-      await axios.post(baseUrl + '/sellerview/orderseller', orderWithDate); // Sending the order details in the request body
-      console.log('Sending order to seller:', item);
+      await axios.post(baseUrl + '/sellerview/orderseller', orderWithDate);
+      console.log('Sending order to seller:', orderWithDate); // Logging order details with date
+      console.log('Ordered product:', item); // Logging ordered product details
       alert('Order placed successfully!');
       setSelectedOrder(null); // Emptying the selected order
     } catch (error) {
@@ -76,7 +78,6 @@ const Order = () => {
                 <th>Description</th>
                 <th>Status</th>
                 <th>Action</th>
-                
               </tr>
             </thead>
             <tbody>
@@ -95,9 +96,7 @@ const Order = () => {
                   </div>
                 </td>
                 <td>{selectedOrder.productDescription}</td>
-                
                 <td>{selectedOrder.status}</td>
-               
                 <td>
                   <button className="send-to-seller-button" onClick={() => sendToSellerProfile(selectedOrder)}>
                     Order
@@ -110,20 +109,11 @@ const Order = () => {
             {totalAmount}</div>
         </div>
       ) : (
-        <p className='nocart'>No items in the orders...!
-         <br></br> <br></br> <br></br> 
-        
-        </p>
-        
+        <p className='nocart'>No items in the orders...!<br /><br /><br /></p>
       )}
-      <br></br>
-      <div className="homefooterbottom">
-      
-      </div>
-      <div>
-      <br></br> <br></br> 
-      </div><Footer />
-     
+      <br /><div className="homefooterbottom"></div>
+      <div><br /><br /></div>
+      <Footer />
     </div>
   );
 };

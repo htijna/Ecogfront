@@ -6,6 +6,7 @@ import img1 from '../Userimg/img2.png'
 import img2 from '../Userimg/img3.png'
 import img3 from '../Userimg/img4.png'
 import img4 from '../Userimg/img5.png'
+import img5 from '../Userimg/img7.png'
 const Aboutus = () => {
   return (
 
@@ -13,25 +14,27 @@ const Aboutus = () => {
         <div className='about'>
         <div className="about-us-container">
       <div className="about-us-content">
+      <div className="scrolling-content">
         <h2>Welcome to Ecog </h2>
-<img src={img1} className='ppp1' />
+        
+        <img src={img5} className='ppp' />    
 <p>Ecog dreams big! Picture a world where organic living knows no bounds. With Ecog, we're shaping that future—a global haven for sustainable goodies and a community buzzing with eco-passion. We're not just selling goods; we're crafting a lifestyle.
    Come, be part of our adventure as we redefine what it means to live green.
     Ecog: where the journey to a healthier planet begins.</p>
 
         <p>
-       
-          At Ecog II, we're on a mission to make sustainable living accessible and convenient for everyone. Our
+        <img src={img2}className='ppp1' />
+          At Ecog , we're on a mission to make sustainable living accessible and convenient for everyone. Our
           journey began with a simple idea: to create a platform where people could easily find and purchase
           organic, eco-friendly products that are good for both their health and the planet.
         </p>
         <p>
-          Founded in [2024], Ecog II has since grown into a trusted source for organic goods, offering a diverse
+          Founded in [2024], Ecog  has since grown into a trusted source for organic goods, offering a diverse
           selection of products ranging from fresh produce to household essentials. We believe that by making
           conscious choices in what we buy, we can make a positive impact on the environment and support
           sustainable practices around the globe.
         </p>
-        <p><img src={img2}className='ppp1' />
+        <p>
           Sustainability is at the core of everything we do. That's why we work closely with farmers, artisans,
           and suppliers who share our commitment to organic farming, fair labor practices, and environmental
           stewardship. By supporting these producers, we're not only ensuring the highest quality products for
@@ -55,7 +58,8 @@ const Aboutus = () => {
           waste. We believe that every small change adds up, and together, we can create a more sustainable
           future for generations to come.
         </p>
-        <p><img src={img3}className='ppp1' />
+        <img src={img1} className='ppp1' />
+        <p>
           As a company, we're committed to transparency and accountability. That's why we're proud to be
           certified by [relevant certification bodies] and adhere to strict standards for organic certification,
           fair trade, and ethical sourcing. We want our customers to feel confident that when they shop with
@@ -73,11 +77,12 @@ const Aboutus = () => {
           everyone has access to healthy, eco-friendly products and where the planet thrives for generations
           to come.
         </p>
-        <p><img src={img4}className='ppp1' />
-          Thank you for choosing Ecog II as your partner in sustainable living. Together, we can make a
+        <p>
+          Thank you for choosing Ecog as your partner in sustainable living. Together, we can make a
           difference, one organic purchase at a time.
         </p>
-       
+        <img src={img4}className='ppp1' />
+      </div>
       </div>
      
     </div> <Footer/>

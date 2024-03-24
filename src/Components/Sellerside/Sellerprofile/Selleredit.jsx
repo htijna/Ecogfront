@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import axios from 'axios';
 import baseUrl from '../../../Api';
-import './userprofile.scss';
+
 import { TextField } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
 
-const Userprofileedit = ({ profile, onUpdateSuccess, onCancel }) => {
+const Selleredit = ({ profile, onUpdateSuccess, onCancel }) => {
   // State management
   const [formData, setFormData] = useState(profile);
-  const { userId } = useParams(); // Get userId from URL params
+  const { sellerId } = useParams(); // Get sellerId from URL params
   const navigate = useNavigate();
 
   // Event handler for form input changes
@@ -20,27 +20,26 @@ const Userprofileedit = ({ profile, onUpdateSuccess, onCancel }) => {
   };
 
   // Event handler for form submission
-// Event handler for form submission
-const handleFormSubmit = e => {
-  e.preventDefault();
-  const userId = localStorage.getItem('userId');
-  if (userId) {
-    axios
-      .put(`${baseUrl}/auth/edituser/${userId}`, formData)
-      .then(response => {
-        onUpdateSuccess(response.data);
-        // Display success message
-        alert('Profile updated successfully');
-        // Navigate to the profile page
-        window.location.href = '/userprofile'; // Assuming 'history' is available from React Router
-      })
-      .catch(err => {
-        console.error('Error updating user profile:', err);
-        // Display error message
-        alert('Failed to update profile. Please try again.');
-      });
-  }
-};
+  const handleFormSubmit = e => {
+    e.preventDefault();
+    const sellerId = localStorage.getItem('sellerId');
+    if (sellerId) {
+      axios
+        .put(`${baseUrl}/sauth/editseller/${sellerId}`, formData) // Update API endpoint
+        .then(response => {
+          onUpdateSuccess(response.data);
+          // Display success message
+          alert('Profile updated successfully');
+          // Navigate to the profile page
+          navigate(`/profile/${sellerId}`); // Navigate to the correct route
+        })
+        .catch(err => {
+          console.error('Error updating seller profile:', err);
+          // Display error message
+          alert('Failed to update profile. Please try again.');
+        });
+    }
+  };
 
   // Render function
   return (
@@ -111,4 +110,4 @@ const handleFormSubmit = e => {
   );
 };
 
-export default Userprofileedit;
+export default Selleredit;
