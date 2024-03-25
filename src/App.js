@@ -37,6 +37,9 @@ import Userprofile from './Components/Userside/Userhome/Userprofile';
 import Userprofileedit from './Components/Userside/Userhome/Userprofileedit';
 import Productedit from './Components/Sellerside/Selleradd/Productedit';
 import Selleredit from './Components/Sellerside/Sellerprofile/Selleredit';
+import SearchResults from './Components/Userside/Userhome/SearchResults';
+import Popular from './Components/Userside/Userfooter/Popular';
+import Wishlist from './Components/Userside/Userhome/Wishlist';
 
 function App() {
   const sellerId = localStorage.getItem('sellerId');
@@ -56,10 +59,11 @@ function App() {
          <Route path='/filter' element={<CategoryFilter />} />
           <Route path='/category/:category' element={ <CategoryPage />} />
           <Route path='/order' element={ <Orderview /> } />
-
+          <Route path="/search-results" element={<SearchResults/>} />
           <Route path='/userprofile' element={<Userprofile method='get' />} />
           <Route path='/uedit' element={ <Userprofileedit method='put' /> } />
-          
+          <Route path='/popularPage' element={<Popular />} />
+          <Route path='/wishlist' element={<Wishlist />} />
 
           
           {/* Sellerside */}

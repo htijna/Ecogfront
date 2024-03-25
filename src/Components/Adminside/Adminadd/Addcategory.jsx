@@ -3,7 +3,6 @@ import './addcategory.scss'
 import { Button, TextField, CircularProgress } from '@mui/material';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import CategoryView from './Categoryview';
 import Adminnav from '../Adminhome/Adminnav';
 import baseUrl from '../../../Api';
 
@@ -23,7 +22,8 @@ const Addcategory = (props) => {
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
-    setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
+    let capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1); // Capitalize first letter
+    setInputs((prevInputs) => ({ ...prevInputs, [name]: capitalizedValue, }));
   };
 
   const addHandler = () => {

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { TextField, Button, Box, CircularProgress } from '@mui/material';
-
 import './addproduct.scss';
 import { useNavigate } from 'react-router-dom';
 import baseUrl from '../../../Api';
@@ -36,9 +35,10 @@ const Addproduct = (props) => {
 
   const inputHandler = (e) => {
     const { name, value } = e.target;
+    let capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1); // Capitalize first letter
     setInputs((prevInputs) => ({
       ...prevInputs,
-      [name]: value,
+      [name]: capitalizedValue,
     }));
   };
 
@@ -79,7 +79,6 @@ const Addproduct = (props) => {
     formData.append('sellerId', sellerId); // Ensure 'SellerId' matches server's expected field name
     formData.append('Productname', inputs.Productname);
     formData.append('Productprice', inputs.Productprice);
-    formData.append('Quantity', inputs.Quantity);
     formData.append('Cid', inputs.Cid);
     formData.append('Status', inputs.Status);
     formData.append('Description', inputs.Description);
@@ -117,6 +116,8 @@ const Addproduct = (props) => {
       .catch((err) => console.error('Error fetching categories:', err));
   }, []);
 
+
+
   return (
     <div>
       <Sellernavbar />
@@ -144,10 +145,10 @@ const Addproduct = (props) => {
                   autoComplete="off"
                 >
                   <div className="filephoto">
-                    &nbsp;&nbsp;&nbsp;Product Name:
+                    &nbsp;&nbsp;&nbsp;Product Name with Quantity kg /g /L:
                     <br />
                     <TextField
-                      placeholder="eg:Apple"
+                      placeholder="eg:Apple 500g"
                       type="text"
                       name="Productname"
                       value={inputs.Productname}
@@ -182,18 +183,7 @@ const Addproduct = (props) => {
                       value={inputs.Productprice}
                       onChange={inputHandler}
                     />
-                    <br />
-                    <br />
-                    &nbsp;&nbsp;&nbsp;Quantity:
-                    <br />
-                    <TextField
-                      id="Quantity"
-                      placeholder="Quantity Kg / Lr"
-                      type="number"
-                      name="Quantity"
-                      value={inputs.Quantity}
-                      onChange={inputHandler}
-                    />
+                  
                     <br />
                     <br />
                     &nbsp;&nbsp;&nbsp;Description:

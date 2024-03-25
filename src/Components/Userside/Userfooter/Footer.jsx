@@ -79,23 +79,24 @@ const Footer = () => {
         <div className="col">
           <h2>Quick Links</h2>
           <ul>
-            <li><a href="#">Home</a></li>
-            <li><a href="#">Products</a></li>
-            <li><a href="#">About Us</a></li>
-            <li><a href="#">Contact</a></li>
-          </ul><br></br>
+            <li><Link  to="/userside/:id" style={{ textDecoration: "none" }}>Home</Link></li>
+            
+            <li><Link  to="/about" style={{ textDecoration: "none" }}>About Us</Link></li>
+            <li><Link  to="/sellerlogin" style={{ textDecoration: "none" }}>Become a Seller</Link></li>
+          </ul><br></br><br></br>
           <p  className='fcustarrange'><SupportAgentIcon/>1800-3002-9824 <br></br> 24/7 Support center&nbsp;&nbsp;</p>
         </div>
         <div className='col'>
                <h3>Popular</h3>
       <ul className="footer-list mb-sm-5 mb-md-0">
-       <li><Link to="#">About Us</Link></li>
-          <li><Link to="#">Delivery Information</Link></li>
-                                                    <li><Link to="#">Privacy Policy</Link></li>
-                                            <li><Link to="#">Terms &amp; Conditions</Link></li>
-                                            <li><Link to="#">Contact Us</Link></li>
-                                            <li><Link to="#">Support Center</Link></li>
-                                            
+      
+      <li><a href="/popularPage#section-delivery">Delivery Information</a></li>
+<li><a href="/popularPage#section-privacy">Privacy Policy</a></li>
+<li><a href="/popularPage#section-terms">Terms &amp; Conditions</a></li>
+<li><a href="/popularPage#section-contact">Contact Us</a></li>
+<li><a href="/popularPage#section-return">Return Policy</a></li>
+<li><a href="/popularPage#section-cancel">Cancellation Policy</a></li>
+
                                         </ul>
                                     </div>
       </div>

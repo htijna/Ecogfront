@@ -36,7 +36,17 @@ const Flexdraw = () => {
 
   const handleSearch = () => {
     console.log("Search query: ", searchQuery);
-    navigate(`/search/${searchQuery}`);
+    // Assuming you have an endpoint to search products
+    axios.get(baseUrl + '/product/search', {
+      params: {
+        query: searchQuery // Pass search query as a parameter
+      }
+    })
+    .then((response) => {
+      // Navigate to a search results page with the products
+      navigate(`/search-results?query=${encodeURIComponent(searchQuery)}`);
+    })
+    .catch((err) => console.log(err));
   };
 
   const handleCategoryChange = (category) => {
@@ -64,11 +74,11 @@ const Flexdraw = () => {
           <div className="hmenu-links">
             <div className="husernavContainer">
               <div className="husersearchContainer">
-                <input 
+              <input 
                   type="text" 
                   value={searchQuery} 
                   onChange={(e) => setSearchQuery(e.target.value)} 
-                  placeholder="Search..." 
+                  placeholder="Search ecog.in" 
                   className="husersearchInput" />
                 <button 
                   onClick={handleSearch} 

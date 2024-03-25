@@ -31,7 +31,7 @@ const Selleredit = ({ profile, onUpdateSuccess, onCancel }) => {
           // Display success message
           alert('Profile updated successfully');
           // Navigate to the profile page
-          navigate(`/profile/${sellerId}`); // Navigate to the correct route
+          window.location.href = '/profile/:id'; // Navigate to the correct route
         })
         .catch(err => {
           console.error('Error updating seller profile:', err);

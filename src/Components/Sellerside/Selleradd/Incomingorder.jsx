@@ -4,10 +4,10 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom'; 
 import baseUrl from '../../../Api';
-import moment from 'moment'; 
 import Sellernavbar from '../Sellerhome/Sellernavbar';
 import './product.scss'
 import Footer from '../../Userside/Userfooter/Footer';
+import moment from 'moment';
 
 const Incomingorder = () => {
   const { productId } = useParams(); 
@@ -81,9 +81,9 @@ const Incomingorder = () => {
               <tr>
                 {/* <th>Product Id</th> */}
                 <th>User Name</th>
-                <th>Product Name</th>
+                <th>Product </th>
                 <th>Price</th>
-                <th>Quantity</th>
+                <th>Needed Quantity</th>
                 <th>Description</th>
                 <th>Status</th>
                 <th>Date</th>
@@ -101,7 +101,7 @@ const Incomingorder = () => {
                   <td>{item.productQuantity}</td>
                   <td>{item.productDescription}</td>
                   <td>{item.status}</td>
-                  <td>{item.orderDate}</td> 
+                  <td>{moment(item.orderDate).format('MMMM Do YYYY')}</td>
                   <td>{item.user.address}</td> 
                   <td>
 

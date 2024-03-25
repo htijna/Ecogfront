@@ -2,11 +2,9 @@
 import {  Button, CircularProgress, TextField } from '@mui/material';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
-import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
-import ModeEditOutlineIcon from '@mui/icons-material/ModeEditOutline';
 
 import baseUrl from '../../../Api';
-import Categoryview from './Categoryview';
+
 import Adminnav from '../Adminhome/Adminnav';
 
 
@@ -38,7 +36,8 @@ const updatevalues =(value)=>{
 
     const inputHandler =(event)=> {
         const {name,value}=event.target
-        setInputs((inputs)=>({...inputs,[name]:value}))
+        let capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1); // Capitalize first letter
+        setInputs((inputs)=>({...inputs,[name]:capitalizedValue,}))
         console.log(inputs)
     }
 

@@ -52,7 +52,7 @@ const Minfooter = () => {
             <div className='box d-flex align-items-center w-100'>
               <span><img src={Icon5} /></span>
               <div className='info'>
-                <h4> returns</h4>
+                <h4> Returns</h4>
                 <p>No return and  Refund</p>
               </div>
             </div>

@@ -6,44 +6,48 @@ import Footer from '../Userfooter/Footer';
 import axios from 'axios';
 import baseUrl from '../../../Api';
 import AddBoxIcon from '@mui/icons-material/AddBox';
+import { notification, Button } from 'antd';
 import IndeterminateCheckBoxIcon from '@mui/icons-material/IndeterminateCheckBox';
 const Cart = () => {
   const [orders, setOrders] = useState([]);
   const location = useLocation();
 
+  const [totalAmount, setTotalAmount] = useState(0);
 
   useEffect(() => {
     fetchOrders();
   }, []);
   
   const fetchOrders = async () => {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-      try {
+    try {
+      const userId = localStorage.getItem('userId');
+      if (userId) {
         const response = await axios.get(`${baseUrl}/cart/viewcart?userId=${userId}`);
-        setOrders(response.data);
-        console.log(orders);
-      } catch (error) {
-        console.error('Error fetching orders:', error);
+        const fetchedOrders = response.data.map(item => ({
+          ...item,
+          productQuantity: isNaN(item.productQuantity) || item.productQuantity < 1 ? 1 : item.productQuantity
+        }));
+        setOrders(fetchedOrders);
+        calculateTotalAmount(fetchedOrders);
+      } else {
+        console.error('User ID not found in localStorage');
       }
-    } else {
-      console.error('User ID not found in localStorage');
+    } catch (error) {
+      console.error('Error fetching orders:', error);
     }
   };
   
-  
   const sendToSellerProfile = async () => {
     try {
-      // Iterate through each item in the orders array and send them to the seller's profile
       for (const item of orders) {
         const requestData = { ...item };
         await axios.post(baseUrl + '/sellerview/orderseller', requestData);
         console.log('Sending order to seller:', requestData);
-        alert('Ordering....');
+        notification.success({ message: 'Order placed successfully' });
       }
-      // Clear the cart after sending all items
       await axios.delete(baseUrl + '/cart/clear');
       setOrders([]);
+      setTotalAmount(0);
     } catch (error) {
       console.error('Error sending order to seller:', error);
     }
@@ -52,69 +56,62 @@ const Cart = () => {
   const removeFromCart = async (id) => {
     try {
       await axios.delete(`${baseUrl}/cart/remove/${id}`);
-      // Update the orders state by filtering out the removed item
-      setOrders(prevOrders => prevOrders.filter(item => item._id !== id));
+      const updatedOrders = orders.filter(item => item._id !== id);
+      setOrders(updatedOrders);
+      calculateTotalAmount(updatedOrders);
     } catch (error) {
       console.error('Error removing item from cart:', error);
     }
   };
-  
 
   const handleIncrement = async (id) => {
     try {
       await axios.put(`${baseUrl}/cart/increment/${id}`);
-      // After updating the quantity on the server, we need to update the local state
-      setOrders(prevOrders => {
-        return prevOrders.map(order => {
-          if (order._id === id) {
-            // Increment the quantity of the specific item
-            return { ...order, productQuantity: order.productQuantity + .5 };
-          }
-          return order;
-        });
-      });
+      updateOrderQuantity(id, 1);
     } catch (error) {
       console.error('Error incrementing item quantity:', error);
     }
   };
-  
 
   const handleDecrement = async (id) => {
     try {
       await axios.put(`${baseUrl}/cart/decrement/${id}`);
-      // After updating the quantity on the server, we need to update the local state
-      setOrders(prevOrders => {
-        return prevOrders.map(order => {
-          if (order._id === id && order.productQuantity > .5) {
-            // Decrement the quantity of the specific item, but ensure it doesn't go below 1
-            return { ...order, productQuantity: order.productQuantity - .5 };
-          }
-          return order;
-        });
-      });
+      updateOrderQuantity(id, -1);
     } catch (error) {
       console.error('Error decrementing item quantity:', error);
     }
   };
   
+  const updateOrderQuantity = (id, change) => {
+    const updatedOrders = orders.map(order => {
+      if (order._id === id) {
+        const newQuantity = Math.max(Math.round(order.productQuantity + change), 1);
+        return { ...order, productQuantity: newQuantity };
+      }
+      return order;
+    });
+    setOrders(updatedOrders);
+    calculateTotalAmount(updatedOrders);
+  };
 
-  // Calculate total amount
-  const totalAmount = orders.reduce((total, item) => total + (item.productPrice * item.productQuantity), 0);
-
+  const calculateTotalAmount = (orders) => {
+    const total = orders.reduce((acc, item) => acc + (item.productPrice * item.productQuantity), 0);
+    setTotalAmount(total);
+  };
   return (
     <div className="midall">
-      <Flexdraw />
-      <br />
+      <Flexdraw/>
+      <br></br>
       <h2 className="hd">Cart</h2>
-      {orders.length === 0 ? (
+      {Array.isArray(orders) && orders.length === 0 ? (
         <p className='nocart'>No items in the cart...!</p>
       ) : (
         <div className="cart-box">
           <table>
             <thead>
               <tr>
-                <th>Product Name</th>
-                <th>Price</th>
+                <th>Product</th>
+                <th>Price ₹</th>
                 <th>Quantity</th>
                 <th>Description</th>
                 <th>Status</th>
@@ -132,9 +129,9 @@ const Cart = () => {
                   <td>{item.productPrice}</td>
                   <td>
                     <div className="quantity-control">
-                      <button onClick={() => handleDecrement(item._id)}><IndeterminateCheckBoxIcon/></button>&nbsp;&nbsp;
-                      <span>{item.productQuantity}</span>&nbsp;&nbsp;
-                      <button onClick={() => handleIncrement(item._id)}><AddBoxIcon/></button>
+                      <IndeterminateCheckBoxIcon onClick={() => handleDecrement(item._id)} style={{ cursor: 'pointer' }} />
+                      &nbsp;&nbsp;<span>{item.productQuantity}</span>&nbsp;&nbsp;
+                      < AddBoxIcon onClick={() => handleIncrement(item._id)} style={{ cursor: 'pointer' }} />
                     </div>
                   </td>
                   <td>{item.productDescription}</td>
@@ -149,18 +146,41 @@ const Cart = () => {
         </div>
       )}
       <div className="total-amount">
-        Total Amount:  ₹{totalAmount}
+        Total Amount: ₹{totalAmount}
       </div>
       <button className="proceed-button" onClick={sendToSellerProfile}>
         Proceed to Order
       </button>
-      <br></br> <br></br> <br></br> <br></br>
-      <div className="homefooterbottom"></div>
-      <div>
-        <Footer />
-      </div>
-    </div>
+
+
+     <br></br> <br></br> <br></br> <br></br><h6 style={{ textAlign: 'center', color: 'red' }}>
+Disclaimer: Kindly verify all details of your order before submission. Please note that once an order is placed, cancellations and refunds are not permitted.
+</h6>
+
+
+<div className="homefooterbottom"></div>
+<div>
+  <Footer />
+</div>
+</div>
   );
 };
 
 export default Cart;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

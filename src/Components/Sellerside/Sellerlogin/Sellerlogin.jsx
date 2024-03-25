@@ -31,6 +31,8 @@ const Sellerlogin = () => {
     }
   };
 
+  
+
   return (
     <div className="sellerpostion">
       <div className="sellercontainer">

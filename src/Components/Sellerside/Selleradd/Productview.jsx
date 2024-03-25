@@ -5,11 +5,9 @@ import ToggleOffIcon from '@mui/icons-material/ToggleOff';
 import ToggleOnIcon from '@mui/icons-material/ToggleOn';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography } from '@mui/material';
 import baseUrl from '../../../Api';
-
 import {Buffer} from 'buffer';
 import './product.scss'
 import Productedit from './Productedit';
-import Sellernavbar from '../Sellerhome/Sellernavbar';
 const Productview = () => {
   const [product, setProduct] = useState([]);
   const [selected, setSelected] = useState();
@@ -34,7 +32,7 @@ const Productview = () => {
 
   const deletevalues =(id)=>{
     console.log("Inactive",id)
-    axios.put(baseUrl + "/product/delete/"+id)
+    axios.put(baseUrl + "/product/inactive/"+id)
     .then((response)=>{
         alert("Inactive")
     window.location.reload(false);
@@ -79,8 +77,7 @@ const activevalues =(id)=>{
           <TableHead>
             <TableRow> <TableCell>Image</TableCell>
               <TableCell>ProductName</TableCell>
-              <TableCell>Price</TableCell>
-              <TableCell>Quantity</TableCell>
+              <TableCell>Price ₹</TableCell>
               <TableCell>Description</TableCell>
               <TableCell>Category</TableCell>
               <TableCell>Status</TableCell>
@@ -102,7 +99,7 @@ const activevalues =(id)=>{
                   </TableCell>
                   <TableCell>{value.Productname}</TableCell>
                   <TableCell>{value.Productprice}</TableCell>
-                  <TableCell>{value.Quantity}</TableCell>
+              
                   <TableCell>{value.Description}</TableCell>
                   <TableCell>{value.Cid?.Categoryname || 'No Category'}</TableCell> 
 

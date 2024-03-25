@@ -2,16 +2,15 @@ import React, { useState, useEffect } from 'react';
 import Adminnav from '../Adminhome/Adminnav';
 import './adminviewproduct.scss';
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, CircularProgress, Button } from '@mui/material';
-import { Buffer } from 'buffer';
 import LoadingIcons from 'react-loading-icons';
 import axios from 'axios'; // Import Axios
 import baseUrl from '../../../Api';
-
+import SearchIcon from '@mui/icons-material/Search';
 const Adminviewproduct = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
+  const [searchTerm, setSearchTerm] = useState('');
   useEffect(() => {
     fetchData();
   }, []);
@@ -39,6 +38,7 @@ const Adminviewproduct = () => {
       await axios.delete(`${baseUrl}/product/premove/${id}`);
       // If deletion is successful, remove the product from the state
       setProducts(prevProducts => prevProducts.filter(product => product._id !== id));
+      alert('Product removed successfully!');
       // Optionally, you can show a success message or perform other actions upon successful removal
     } catch (error) {
       console.error('Error removing product:', error.response.data); // Log the specific error received from the server
@@ -47,6 +47,22 @@ const Adminviewproduct = () => {
     }
   };
   
+  const handleSearch = async (event) => {
+    event.preventDefault();
+    try {
+      const response = await fetch(`http://localhost:5000/product/adminproductview/?search=${searchTerm}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch search results');
+      }
+      const searchData = await response.json();
+      setProducts(searchData);
+      setLoading(false);
+    } catch (error) {
+      console.error('Error fetching search results:', error);
+      setError(error.message);
+      setLoading(false);
+    }
+  };
 
   return (
     <div className='adminprolist'>
@@ -54,6 +70,38 @@ const Adminviewproduct = () => {
         <Adminnav />
         <div>
           <h2 className='adhead'> Product View</h2>
+          <div style={{ display: 'flex', justifyContent: 'flex-start', marginBottom: '20px' }}>
+  <form onSubmit={handleSearch} style={{ display: 'flex' }}>
+    &nbsp;&nbsp;&nbsp; 
+    <input
+      type="text"
+      value={searchTerm}
+      onChange={(e) => setSearchTerm(e.target.value)}
+      style={{ 
+        padding: '6px 10px', // Adjusted padding
+        width: '200px', 
+        border: '1px solid #ccc', 
+        borderRadius: '20px 0 0 20px', // Curvy edges
+        outline: 'none' 
+      }}
+      placeholder="Search Products"
+    />
+    <button
+      type="submit"
+      style={{ 
+        padding: '6px 10px', // Adjusted padding
+        backgroundColor: '#007bff', 
+        color: 'white', 
+        border: '1px solid #007bff', 
+        borderRadius: '0 20px 20px 0', // Curvy edges
+        cursor: 'pointer', 
+        outline: 'none' 
+      }}
+    >
+      <SearchIcon />
+    </button>
+  </form>
+</div>
           {loading ? (
             <div className="loading-animation">
               <LoadingIcons.BallTriangle stroke="green" />
@@ -65,8 +113,8 @@ const Adminviewproduct = () => {
                     <TableHead>
                       <TableRow>
                         <TableCell>Image</TableCell>
-                        <TableCell>ProductName</TableCell>
-                        <TableCell>Price</TableCell>
+                        <TableCell>Product</TableCell>
+                        <TableCell>Price ₹</TableCell>
                         <TableCell>Quantity</TableCell>
                         <TableCell>Description</TableCell>
                         <TableCell>Category</TableCell>

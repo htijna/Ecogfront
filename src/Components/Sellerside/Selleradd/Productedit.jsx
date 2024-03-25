@@ -14,7 +14,8 @@ const Productedit = (props) => {
 
   const inputHandler = (event) => {
     const { name, value } = event.target;
-    setInputs((prevInputs) => ({ ...prevInputs, [name]: value }));
+    let capitalizedValue = value.charAt(0).toUpperCase() + value.slice(1); // Capitalize first letter
+    setInputs((prevInputs) => ({ ...prevInputs, [name]: capitalizedValue }));
   };
 
   const handleImage = (event) => {
@@ -29,7 +30,6 @@ const savedata = () => {
   const formdata = new FormData();
   formdata.append('Productname', inputs.Productname);
   formdata.append('Productprice', inputs.Productprice);
-  formdata.append('Quantity', inputs.Quantity);
   formdata.append('Cid', inputs.Cid);
   formdata.append('Status', inputs.Status);
   formdata.append('Description', inputs.Description);
@@ -43,11 +43,11 @@ const savedata = () => {
     .put(baseUrl + `/product/editproduct/${inputs._id}`, formdata)
     .then((response) => {
       alert('Record saved');
-      navigate('/products');
+      window.location.href = '/productlist';
     })
     .catch((err) => {
       console.log('Error:', err); // Log the error to the console
-      alert('Failed to update product. Please try again.'); // Show a generic error message
+      alert('Failed to update product. Please select category.'); // Show a generic error message
     })
     .finally(() => {
       setLoading(false);
@@ -90,7 +90,7 @@ const savedata = () => {
                   autoComplete='off'
                 >
                   <div className='filephoto'>
-                    &nbsp;&nbsp;&nbsp;Product Name:
+                    &nbsp;&nbsp;&nbsp;Product Name with Quantity kg /g/L:
                     <br />
                     <TextField
                       placeholder='eg:Apple'
@@ -122,16 +122,7 @@ const savedata = () => {
                       value={inputs.Productprice}
                       onChange={inputHandler}
                     />
-                    <br /> &nbsp;&nbsp;&nbsp;Quantity:
-                    <br />
-                    <TextField
-                      id='Quantity'
-                      placeholder='Quantity Kg / Lr'
-                      type='number'
-                      name='Quantity'
-                      value={inputs.Quantity}
-                      onChange={inputHandler}
-                    />
+                
                     <br /> &nbsp;&nbsp;&nbsp;Description:
                     <br /> &nbsp;&nbsp;&nbsp;
                     <textarea

@@ -15,3 +15,8 @@ transition{transition: all 0.3s ease-in-out;}
 .btn-g:hover{background: #FDC040 !important;}
 
 .bg-g,.bg-success{background: #3bb77e !important;}
+
+
+.upcs{
+    text-transform: capitalize;
+}

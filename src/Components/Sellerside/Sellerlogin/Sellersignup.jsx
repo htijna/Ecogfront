@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './sellersignup.scss'
 
 
@@ -19,14 +19,31 @@ const Sellersignup = () => {
 
   const [successMessage, setSuccessMessage] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
+    const { name, value } = e.target;
+    let updatedValue = value;
+    if (name === 'name' || name === 'address') {
+      // Capitalize the first letter of the value if the field name is 'name' or 'address'
+      updatedValue = value.charAt(0).toUpperCase() + value.slice(1);
+    }
+    setFormData({ ...formData, [name]: updatedValue });
   };
-
+  
   const handleSignup = async (e) => {
     e.preventDefault();
-
+  
+    // Email validation regex
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+  
+    // Check if the email is valid
+    if (!emailRegex.test(formData.email)) {
+      setErrorMessage('Please enter a valid email address.');
+      setSuccessMessage('');
+      return;
+    }
+  
     try {
       const response = await api.post('/sauth/sellersignup', formData);
       console.log('Signup successful', response.data);
@@ -40,6 +57,7 @@ const Sellersignup = () => {
         address: '',
         password: '',
       });
+      navigate('/sellerlogin');
     } catch (error) {
       console.error('Signup failed', error.response ? error.response.data : error.message);
       // Handle error, e.g., show error message
@@ -47,6 +65,7 @@ const Sellersignup = () => {
       setSuccessMessage('');
     }
   };
+
   return (
     <div><br></br>
     <div className='sellersignupppostion'>

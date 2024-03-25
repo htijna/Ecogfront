@@ -59,7 +59,7 @@ const Orderview = () => {
             <thead>
               <tr>
                 <th>Product Name</th>
-                <th>Price</th>
+                <th>Price ₹</th>
                 <th>Quantity</th>
                 <th>Description</th>
                 <th>Status</th>
@@ -79,7 +79,7 @@ const Orderview = () => {
                   <td>{item.productQuantity}</td>
                   <td>{item.productDescription}</td>
                   <td>{item.status}</td>
-                  <td>{moment(item.orderDate).format('MMMM Do YYYY, h:mm:ss a')}</td>
+                  <td>{moment(item.orderDate).format('MMMM Do YYYY')}</td>
 
                   <td>
                     {deliveredLoading && <span>Pending...</span>}
