@@ -145,7 +145,7 @@ const Addproduct = (props) => {
                   autoComplete="off"
                 >
                   <div className="filephoto">
-                    &nbsp;&nbsp;&nbsp;Product Name with Quantity kg /g /L:
+                    &nbsp;&nbsp;&nbsp;Product Name with Quantity kg / g /L:
                     <br />
                     <TextField
                       placeholder="eg:Apple 500g"
@@ -173,11 +173,11 @@ const Addproduct = (props) => {
                     </select>
                     <br />
                     <br />
-                    &nbsp;&nbsp;&nbsp;Price:
+                    &nbsp;&nbsp;&nbsp;Price ₹:
                     <br />
                     <TextField
-                      id="Price"
-                      placeholder="In Kg"
+                      id="Price ₹"
+                      placeholder=" eg 100 ₹"
                       type="number"
                       name="Productprice"
                       value={inputs.Productprice}

@@ -115,7 +115,6 @@ const Adminviewproduct = () => {
                         <TableCell>Image</TableCell>
                         <TableCell>Product</TableCell>
                         <TableCell>Price ₹</TableCell>
-                        <TableCell>Quantity</TableCell>
                         <TableCell>Description</TableCell>
                         <TableCell>Category</TableCell>
                         <TableCell>Seller</TableCell>
@@ -131,7 +130,6 @@ const Adminviewproduct = () => {
                           </TableCell>
                           <TableCell>{value.Productname}</TableCell>
                           <TableCell>{value.Productprice}</TableCell>
-                          <TableCell>{value.Quantity}</TableCell>
                           <TableCell>{value.Description}</TableCell>
                           <TableCell>{value.category[0]?.Categoryname || 'No Category'}</TableCell>
                           <TableCell>{value.sellerId}</TableCell>

@@ -39,7 +39,8 @@ const CategoryView = () => {
 
   const activeValues = (id) => {
     console.log('Active', id);
-    axios.put(baseUrl + '/category/active/' + id).then((response) => {
+    axios.put(baseUrl + '/category/active/' + id)
+    .then((response) => {
       alert('Active');
       window.location.reload(false);
     });

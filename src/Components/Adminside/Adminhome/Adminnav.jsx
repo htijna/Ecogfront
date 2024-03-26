@@ -44,7 +44,7 @@ const Adminnav = () => {
         <div className="hmenu-links">
           <div className="husernavContainer">
             <div className="husersearchContainer">
-              <input 
+              {/* <input 
                 type="text" 
                 value={searchQuery} 
                 onChange={(e) => setSearchQuery(e.target.value)} 
@@ -54,7 +54,7 @@ const Adminnav = () => {
                 onClick={handleSearch} 
                 className="husersearchButton" >
                 <SearchIcon/>
-              </button>
+              </button> */}
             </div>
           </div>
         
