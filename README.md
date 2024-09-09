@@ -15,3 +15,6 @@ Objectives:
 How to Get Started:
     Farmers can sign up, list their products, and start selling immediately.
     Consumers can browse a wide selection of locally grown products, place orders.
+
+
+Backend of this project is another repository  path- https://github.com/htijna/Ecogback
