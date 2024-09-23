@@ -1,4 +1,4 @@
-![Screenshot 2024-03-11 141907](https://github.com/user-attachments/assets/c29e266e-aed9-4da9-9abd-75b04c70bd05)Ecog - Direct Farmer to Consumer E-commerce Platform
+Ecog - Direct Farmer to Consumer E-commerce Platform
 
 Ecog is an innovative e-commerce platform designed to connect farmers directly with consumers. By eliminating the middlemen, Ecog empowers farmers to sell their products based on real-time market demand, giving them more control over pricing while ensuring that consumers have access to fresh, organic, and locally grown produce.
 Key Features:
